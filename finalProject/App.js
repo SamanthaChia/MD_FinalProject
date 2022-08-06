@@ -1,35 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';  
+import MainRoot from './src/pages/MainRoot';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
-  // const [movieData, setMovieData] = useState(null);
-
-  // useEffect(() => {
-  //   (async() => {
-  //     fetch('https://api.themoviedb.org/3/movie/550?api_key=a8b1207f53708946a64f6fe39f5f4881&language=en-US', {
-  //      method:"GET",
-  //      headers:{
-  //       Accept:'application/json',
-  //       'Content-Type': 'application/json'
-  //      }
-  //     })
-  //     .then((response) => response.json())
-  //     .then((json) => {
-  //       setMovieData(json);
-  //       console.log(movieData);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  //   })();
-  // }, []);
-
   return (
-    <View style={styles.container}>
-      <Text> Working</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{
+        headerShown:false,
+      }}>
+        <Stack.Screen
+          name="MainRoot"
+          component={MainRoot}
+          options={{ title: 'MainRoot' }}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 
