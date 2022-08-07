@@ -50,16 +50,15 @@ export default class Home extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
+                <Text style={styles.header}>Popular Movies</Text>
                 <ScrollView 
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
                     <View style={styles.popularHome}>
                         {
-                            this.state.popularMovies.map((item) => {
-                                return(
-                                    // key to remove unique key id warning
-                                <MovieComp item={item} />
-                                )
+                            this.state.popularMovies.map((item, index) => {
+                                // index to remove key child warning 
+                                return index < 4 ? <MovieComp item={item} /> : <View/>;
                             })
                         }
                     </View>
@@ -72,11 +71,13 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
     },
     popularHome:{
         flexDirection: "row",
         flex: 1,
+    },
+    header:{
+        fontWeight: "bold",
+        fontSize: 20,
     }
 })
