@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
+import Movie from '../models/Movie';
 
 export default class Home extends Component {
     _isMount = false;
@@ -18,7 +19,24 @@ export default class Home extends Component {
             fetch('https://api.themoviedb.org/3/movie/popular?api_key=a8b1207f53708946a64f6fe39f5f4881')
             .then(response => response.json())
             .then(responseJson => {
-                console.log(responseJson.results);
+                var popularMovieData = [];
+                responseJson.results.forEach((movie) => {
+                    popularMovieData.push(new Movie({
+                        id: movie.id,
+                        title: movie.title,
+                        poster_path: movie.poster_path,
+                        overview: movie.overview,
+                        genre_ids: movie.genre_ids,
+                        release_date: movie.release_date,
+                        popularity: movie.popularity,
+                        vote_count: movie.vote_count,
+                        vote_average: movie.vote_average
+                        })
+                    );
+                });
+                this.setState({
+                    popularMovies: popularMovieData,
+                })
             })
             .catch((error) => console.error(error))
             )
@@ -31,7 +49,14 @@ export default class Home extends Component {
     render() {
         return (
             <SafeAreaView style = {styles.container}>
-                <Text>Home</Text>
+            {
+                this.state.popularMovies.map((item) => {
+                    return(
+                        // key to remove unique key id warning
+                        <Text key={item.id}>{item.title}</Text>
+                    )
+                })
+            }
             </SafeAreaView>
         )
     }
