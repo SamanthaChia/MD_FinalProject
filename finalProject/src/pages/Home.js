@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, ScrollView, Text, StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MovieComp from '../components/MovieComp';
 import Movie from '../models/Movie';
 
@@ -50,7 +52,10 @@ export default class Home extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
-                <Text style={styles.header}>Popular Movies</Text>
+                <View style={styles.header}>
+                    <Text style={styles.headerTitle} >Popular Movies</Text>
+                    <MaterialCommunityIcons name="magnify" size={27} />
+                </View>
                 <ScrollView 
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
@@ -71,13 +76,23 @@ export default class Home extends Component {
 const styles = StyleSheet.create({
     container:{
         flex: 1,
+        padding: 5,
+        marginTop: Constants.statusBarHeight,
     },
     popularHome:{
         flexDirection: "row",
         flex: 1,
+        paddingLeft: 20,
     },
     header:{
-        fontWeight: "bold",
-        fontSize: 20,
-    }
+        width: "100%",
+        flexDirection:"row",
+        justifyContent:"space-between",
+        paddingHorizontal: 20,
+        marginBottom: 10,
+    },
+    headerTitle:{
+        fontSize: 25,
+        fontWeight: "bold"
+    },
 })
