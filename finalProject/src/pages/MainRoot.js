@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, ActivityIndicator } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Constants from 'expo-constants';
@@ -10,12 +10,38 @@ import Settings from './Settings';
 const Tab = createBottomTabNavigator();
 
 class MainRoot extends Component{
+
+    state={
+        isLoading: false,
+        genres:[]
+    }
+
+    componentDidMount(){
+        return(
+            fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=a8b1207f53708946a64f6fe39f5f4881')
+            .then((response) => response.json())
+            .then((responseJson) => {})
+            .catch((error) => console.error(error))
+        )
+        this.setState({
+            isLoading: false,
+            genres: responseJson.genres,
+        });
+    }
+
     render() {
+        if(this.state.isLoading){
+            <SafeAreaView style={styles.activitySafeArea}>
+                <ActivityIndicator />
+            </SafeAreaView>
+        }
+
         return(
             <Tab.Navigator 
                 screenOptions = {{
                     tabBarActiveTintColor: "#84DCC6",
                     tabBarInactiveTintColor: "#95A3B3",
+                    headerShown: false,
                 }}
                 initialRouteName = "Home"
             >
@@ -61,6 +87,12 @@ const styles = StyleSheet.create({
         flex:1,
         marginTop: Constants.statusBarHeight,
     },
+
+    activitySafeArea:{
+        flex:1,
+        justifyContent:"center",
+        alignItems:"center"
+    }
 });
 
 export default MainRoot;
