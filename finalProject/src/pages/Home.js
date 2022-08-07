@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, View, ScrollView, Text, StyleSheet } from 'react-native';
 import MovieComp from '../components/MovieComp';
 import Movie from '../models/Movie';
 
@@ -50,14 +50,18 @@ export default class Home extends Component {
     render() {
         return (
             <SafeAreaView style = {styles.container}>
-            {
-                this.state.popularMovies.map((item) => {
-                    return(
-                        // key to remove unique key id warning
-                       <MovieComp item={item} />
-                    )
-                })
-            }
+                <ScrollView horizontal={true}>
+                    <View style={styles.popularHome}>
+                        {
+                            this.state.popularMovies.map((item) => {
+                                return(
+                                    // key to remove unique key id warning
+                                <MovieComp item={item} />
+                                )
+                            })
+                        }
+                    </View>
+                </ScrollView>
             </SafeAreaView>
         )
     }
@@ -69,4 +73,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    popularHome:{
+        flexDirection: "row",
+        flex: 1,
+    }
 })
