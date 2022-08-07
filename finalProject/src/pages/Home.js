@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
+import MovieComp from '../components/MovieComp';
 import Movie from '../models/Movie';
 
 export default class Home extends Component {
@@ -53,7 +54,7 @@ export default class Home extends Component {
                 this.state.popularMovies.map((item) => {
                     return(
                         // key to remove unique key id warning
-                        <Text key={item.id}>{item.title}</Text>
+                       <MovieComp item={item} />
                     )
                 })
             }
