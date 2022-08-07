@@ -14,6 +14,7 @@ export default class Home extends Component {
         popularMovies: [],
     };
 
+    //what will happen when view is mounted
     componentDidMount(){
         this._isMount = true;
         
