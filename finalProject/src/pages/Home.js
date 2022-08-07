@@ -49,8 +49,10 @@ export default class Home extends Component {
 
     render() {
         return (
-            <SafeAreaView style = {styles.container}>
-                <ScrollView horizontal={true}>
+            <SafeAreaView style={styles.container}>
+                <ScrollView 
+                    horizontal={true}
+                    showsHorizontalScrollIndicator={false}>
                     <View style={styles.popularHome}>
                         {
                             this.state.popularMovies.map((item) => {

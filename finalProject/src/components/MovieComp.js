@@ -16,8 +16,8 @@ const styles = StyleSheet.create({
         flexWrap:"wrap",
     },
     poster:{
-        width:342,
-        height:513,
+        width:315,
+        height:497,
     }
 });
 
