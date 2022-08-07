@@ -14,10 +14,13 @@ const styles = StyleSheet.create({
     container:{
         flexDirection:"column",
         flexWrap:"wrap",
+        marginRight:10,
     },
     poster:{
-        width:315,
-        height:497,
+        borderRadius:10,
+        width:166,
+        height:255,
+        marginBottom:10,
     }
 });
 
