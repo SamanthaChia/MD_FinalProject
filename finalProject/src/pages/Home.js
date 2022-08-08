@@ -64,7 +64,11 @@ export default class Home extends Component {
                         {
                             this.state.popularMovies.map((item, index) => {
                                 // index to remove key child warning 
-                                return index < 4 ? <MovieComp item={item} /> : <View/>;
+                                return index < 4 ? (
+                                    <MovieComp key={item.id} item={item} />
+                                 ) :
+                                 ( <View key={item.id} />
+                                 );
                             })
                         }
                     </View>
