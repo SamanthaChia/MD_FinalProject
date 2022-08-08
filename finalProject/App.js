@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';  
 import MainRoot from './src/pages/MainRoot';
+import MovieDetails from './src/pages/MovieDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,11 @@ export default function App() {
           name="MainRoot"
           component={MainRoot}
           options={{ title: 'MainRoot' }}
+        />
+        <Stack.Screen
+          name="MovieDetails"
+          component={MovieDetails}
+          options={{ title: 'MovieDetails' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

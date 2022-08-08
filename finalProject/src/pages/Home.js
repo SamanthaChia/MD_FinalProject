@@ -6,13 +6,21 @@ import MovieComp from '../components/MovieComp';
 import Movie from '../models/Movie';
 
 export default class Home extends Component {
+    // initialise
     _isMount = false;
+    genres = [];
 
     state = {
         isLoading: false,
         recentMovies: [],
         popularMovies: [],
     };
+    
+    constructor(props){
+        //set with props
+        super(props);
+        this.genres = props.genres;
+    }
 
     //what will happen when view is mounted
     componentDidMount(){
@@ -24,7 +32,17 @@ export default class Home extends Component {
             .then(response => response.json())
             .then(responseJson => {
                 var popularMovieData = [];
+                var allGenres = this.genres;
                 responseJson.results.forEach((movie) => {
+                    // movie.genres as an array to store it all in and push into data
+                    movie.genres = [];
+                    movie.genre_ids.forEach((genreId) => {
+                        var genreData = allGenres.filter((x) => x.id === genreId);
+                        if (genreData.length != 0) {
+                            movie.genres.push(genreData[0].name);
+                        }
+                    });
+
                     popularMovieData.push(new Movie({
                         id: movie.id,
                         title: movie.title,
@@ -34,13 +52,17 @@ export default class Home extends Component {
                         release_date: movie.release_date,
                         popularity: movie.popularity,
                         vote_count: movie.vote_count,
-                        vote_average: movie.vote_average
+                        vote_average: movie.vote_average,
+                        genre: movie.genres,
                         })
                     );
                 });
-                this.setState({
-                    popularMovies: popularMovieData,
-                })
+                
+                if(this._isMount){
+                    this.setState({
+                        popularMovies: popularMovieData,
+                    });
+                }
             })
             .catch((error) => console.error(error))
             )
@@ -63,8 +85,12 @@ export default class Home extends Component {
                     <View style={styles.popularHome}>
                         {
                             this.state.popularMovies.map((item, index) => {
-                                // index to remove key child warning 
-                                return index < 4 ? <MovieComp item={item} /> : <View/>;
+                                // key to remove key child warning 
+                                return index < 4 ? (
+                                    <MovieComp key={item.id} item={item} />
+                                 ) :
+                                 ( <View key={item.id} />
+                                 );
                             })
                         }
                     </View>
