@@ -38,8 +38,8 @@ export default class Home extends Component {
                     movie.genres = [];
                     movie.genre_ids.forEach((genreId) => {
                         var genreData = allGenres.filter((x) => x.id === genreId);
-                        if (genreData != null) {
-                            movie.genres.push(genreData[0].name)
+                        if (genreData.length != 0) {
+                            movie.genres.push(genreData[0].name);
                         }
                     });
 

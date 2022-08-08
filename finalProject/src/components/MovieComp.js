@@ -1,9 +1,15 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
 
+import { useNavigation } from '@react-navigation/native';
+
 function MovieComp(props){
+
+    const navigation = useNavigation();
+
     return(
-        <TouchableWithoutFeedback onPress= {() => console.log("working")}>
+        //  pass details for props through navigation, as details.
+        <TouchableWithoutFeedback onPress= {() => navigation.navigate('MovieDetails', { details: props.item })}>
             <View style={styles.container}>
                 <Image style={styles.poster} source={{uri:"http://image.tmdb.org/t/p/w342/" + props.item.poster_path}} />
                 <Text>{props.item.title}</Text>
