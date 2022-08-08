@@ -12,24 +12,29 @@ const Tab = createBottomTabNavigator();
 class MainRoot extends Component{
 
     state={
-        isLoading: false,
+        isLoading: true,
         genres:[]
-    }
+    };
 
     componentDidMount(){
         return(
             fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=a8b1207f53708946a64f6fe39f5f4881')
             .then((response) => response.json())
-            .then((responseJson) => {})
+            .then((responseJson) => {
+                this.setState({
+                    isLoading:false,
+                    genres: responseJson.genres,
+                });
+            })
             .catch((error) => console.error(error))
         )
-        this.setState({
-            isLoading: false,
-            genres: responseJson.genres,
-        });
     }
 
     render() {
+        const HomeComponent = (props) => (
+         <Home genres={this.state.genres}/>
+        );
+
         if(this.state.isLoading){
             <SafeAreaView style={styles.activitySafeArea}>
                 <ActivityIndicator />
@@ -53,7 +58,7 @@ class MainRoot extends Component{
                         ),
                     }}
                     name="Home"
-                    component={Home}
+                    component={HomeComponent}
                     />
 
                 <Tab.Screen

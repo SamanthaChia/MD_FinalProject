@@ -13,6 +13,11 @@ export default class Home extends Component {
         recentMovies: [],
         popularMovies: [],
     };
+    
+    constructor(props){
+        super(props);
+        console.log(props.genres);
+    }
 
     //what will happen when view is mounted
     componentDidMount(){
@@ -63,7 +68,7 @@ export default class Home extends Component {
                     <View style={styles.popularHome}>
                         {
                             this.state.popularMovies.map((item, index) => {
-                                // index to remove key child warning 
+                                // key to remove key child warning 
                                 return index < 4 ? (
                                     <MovieComp key={item.id} item={item} />
                                  ) :
