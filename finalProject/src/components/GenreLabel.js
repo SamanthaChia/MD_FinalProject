@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
         paddingVertical: 5,
         borderRadius: 16,
         marginRight: 10,
+        marginTop: 5,
     },
 
     genreText:{

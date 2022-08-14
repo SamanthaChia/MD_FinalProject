@@ -31,7 +31,7 @@ function MovieDetails({navigation, route}){
                 <View style={styles.movie_information}>
                     <View style={styles.outer_box}>
                         <View style={styles.title_genre}>
-                            <Text>{movieDetails.title}</Text>
+                            <Text style={styles.title}>{movieDetails.title}</Text>
                             <Text>{movieDetails.release_date}</Text>
                         </View>
                         <View style={styles.averageScore}>
@@ -53,12 +53,15 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
     },
+    title:{
+      fontSize: 23,
+      fontWeight: "bold"  
+    },
     poster:{
         height:230,
     },
     movie_information:{
         flex: 1,
-        backgroundColor: "grey",
         padding: 20,
     },
     outer_box:{
