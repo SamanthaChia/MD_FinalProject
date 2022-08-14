@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Image, ScrollView, TouchableWithoutFeedback } f
 import Constants from 'expo-constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import GenreLabel from '../components/GenreLabel';
+import TrailerTeaser from '../models/TrailerTeaser';
 
 class MovieDetails extends Component{
     movieDetails = null;
@@ -12,12 +13,27 @@ class MovieDetails extends Component{
         this.movieDetails = props.route.params.details;
     }
 
+    state = {
+        trailerTeasers: [],
+    };
+
     componentDidMount(){
         return (
             fetch('https://api.themoviedb.org/3/movie/'+ this.movieDetails.id +'/videos?api_key=a8b1207f53708946a64f6fe39f5f4881')
                 .then((response) => response.json())
                 .then((responseJson) => {
-                    console.log(responseJson.results);
+                    var items = [];
+                    responseJson.results.map((movie) => {
+                        items.push(new TrailerTeaser({
+                            key: movie.key,
+                            name: movie.name,
+                            type:movie.type,
+                        })
+                        );
+                    });
+
+                    this.setState({trailerTeasers: items});
+
                 }).catch((error) => console.error(error))
         );
 
@@ -61,6 +77,13 @@ class MovieDetails extends Component{
                     <Text>{this.movieDetails.overview}</Text>
                     <Text style={styles.header}>Cast</Text>
                     <Text style={styles.header}>Movie Trailers & Teasers</Text>
+                    <View>
+                        {
+                            this.state.trailerTeasers.map((item) => {
+                                return <Text key={item.key}>{item.name}</Text>;
+                            })
+                        }
+                    </View>
                 </View>
             </ScrollView>
         </View>
