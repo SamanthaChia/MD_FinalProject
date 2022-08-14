@@ -76,9 +76,18 @@ export default class Home extends Component {
         return (
             <SafeAreaView style={styles.container}>
                 <View style={styles.header}>
-                    <Text style={styles.headerTitle} >Popular Movies</Text>
+                    <Text style={styles.appName} >App Name</Text>
                     <MaterialCommunityIcons name="magnify" size={27} />
                 </View>
+                
+                <View style={styles.popularMoviesBox}>
+                    <Text style={styles.headerTitle}>Popular Movies</Text>
+                    <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
+                            <Text>View All</Text>
+                            <MaterialCommunityIcons name="chevron-right" size={20} />
+                    </View>
+                </View>
+
                 <ScrollView 
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}>
@@ -118,8 +127,19 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         marginBottom: 10,
     },
-    headerTitle:{
+    appName:{
         fontSize: 25,
         fontWeight: "bold"
     },
+    headerTitle:{
+        fontWeight: "bold",
+        fontSize:20,
+    },
+    popularMoviesBox:{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingHorizontal: 20,
+        marginBottom: 10,
+    }
 })
