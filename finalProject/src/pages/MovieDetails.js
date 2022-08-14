@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import GenreLabel from '../components/GenreLabel';
 import TrailerTeaser from '../models/TrailerTeaser';
+import TrailerTeaserDisplay from '../components/TrailerTeaserDisplay';
 
 class MovieDetails extends Component{
     movieDetails = null;
@@ -77,10 +78,10 @@ class MovieDetails extends Component{
                     <Text>{this.movieDetails.overview}</Text>
                     <Text style={styles.header}>Cast</Text>
                     <Text style={styles.header}>Movie Trailers & Teasers</Text>
-                    <View>
+                    <View style={styles.trailerTeaserBox}>
                         {
                             this.state.trailerTeasers.map((item) => {
-                                return <Text key={item.key}>{item.name}</Text>;
+                                return <TrailerTeaserDisplay key={item.key} poster={this.movieDetails.poster_path} trailerdata={item} />;
                             })
                         }
                     </View>
@@ -128,7 +129,11 @@ const styles = StyleSheet.create({
         fontSize: 23,
         fontWeight: "bold",
         marginTop: 10,
-    }
+    },
+    trailerTeaserBox:{
+        flexWrap: "wrap",
+        flexDirection: "row",
+    },
 });
 
 export default MovieDetails;
