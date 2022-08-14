@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, StyleSheet, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import Constants from 'expo-constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import GenreLabel from '../components/GenreLabel';
 
-function MovieDetails({navigation, route}){
-    const movieDetails = route.params.details;
-    
+class MovieDetails extends Component{
+    movieDetails = null;
+
+    constructor(props){
+        super(props);
+        this.movieDetails = props.route.params.details;
+    }
+
+   render(){
+
     return(
         <View style={styles.container}>
             <ScrollView>
@@ -25,28 +32,29 @@ function MovieDetails({navigation, route}){
                         color={"#fff"}
                     />
                 </TouchableWithoutFeedback>
-                <Image style={styles.poster} resizeMode={"cover"} source={{uri:"http://image.tmdb.org/t/p/w500/" + movieDetails.poster_path}} />
+                <Image style={styles.poster} resizeMode={"cover"} source={{uri:"http://image.tmdb.org/t/p/w500/" + this.movieDetails.poster_path}} />
                 {/* Retrieve from navigation, using route parms, and retrieving the 
                 params passed into details. */}
                 <View style={styles.movie_information}>
                     <View style={styles.outer_box}>
                         <View style={styles.title_genre}>
-                            <Text style={styles.title}>{movieDetails.title}</Text>
-                            <Text>{movieDetails.release_date}</Text>
+                            <Text style={styles.title}>{this.movieDetails.title}</Text>
+                            <Text>{this.movieDetails.release_date}</Text>
                         </View>
                         <View style={styles.averageScore}>
-                            <Text>{movieDetails.vote_average}</Text>
+                            <Text>{this.movieDetails.vote_average}</Text>
                         </View>
                     </View>
-                    <GenreLabel data={movieDetails.genre} />
+                    <GenreLabel data={this.movieDetails.genre} />
                     <Text style={styles.header}>Movie Description</Text>
-                    <Text>{movieDetails.overview}</Text>
+                    <Text>{this.movieDetails.overview}</Text>
                     <Text style={styles.header}>Cast</Text>
                     <Text style={styles.header}>Movie Trailers & Teasers</Text>
                 </View>
             </ScrollView>
         </View>
     );
+   }
 }
 
 const styles = StyleSheet.create({
