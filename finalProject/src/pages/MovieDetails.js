@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { View, StyleSheet, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import React, { Component, useState } from 'react';
+import { View, StyleSheet, Text, Image, ScrollView, TouchableWithoutFeedback, Modal} from 'react-native';
+import YoutubePlayer from "react-native-youtube-iframe";
 import Constants from 'expo-constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import GenreLabel from '../components/GenreLabel';
@@ -16,6 +17,8 @@ class MovieDetails extends Component{
 
     state = {
         trailerTeasers: [],
+        modalVisible: false,
+        activeMovieTrailerKey: "",
     };
 
     componentDidMount(){
@@ -40,10 +43,40 @@ class MovieDetails extends Component{
 
     }
 
+
    render(){
 
     return(
         <View style={styles.container}>
+            <Modal 
+                style={styles.modal}
+                animationType="slide"
+                transparent={true}
+                statusBarTranslucent={true}
+                visible={this.state.modalVisible}
+                onRequestClose={()=>{
+                    this.setState({ modalVisible: false});
+                }}
+            >
+                <View style={styles.modalBox}>
+                    <View style={styles.xBtn}>
+                        <TouchableWithoutFeedback onPress = { () => this.setState({modalVisible: false})}>
+                        <MaterialCommunityIcons 
+                            name="close"
+                            size={20}
+                            color={"white"}
+                        />
+                    </TouchableWithoutFeedback>
+                    </View>
+                    <View style={{width: "100%"}}>
+                        <YoutubePlayer
+                            height={300}
+                            play={true}
+                            videoId={this.state.activeMovieTrailerKey}
+                        />
+                     </View>
+                </View>
+            </Modal>
             <ScrollView>
                 <TouchableWithoutFeedback onPress = { () => this.props.navigation.pop()}>
                     <MaterialCommunityIcons 
@@ -81,7 +114,18 @@ class MovieDetails extends Component{
                     <View style={styles.trailerTeaserBox}>
                         {
                             this.state.trailerTeasers.map((item) => {
-                                return <TrailerTeaserDisplay key={item.key} poster={this.movieDetails.poster_path} trailerdata={item} />;
+                                return (
+                                        <TrailerTeaserDisplay 
+                                            key={item.key}
+                                            onPressFunction={()=> this.setState({
+                                                modalVisible:true,
+                                                activeMovieTrailerKey: item.key
+                                            })}
+                                            poster={this.movieDetails.poster_path}
+                                            trailerdata={item}
+                                            modalVisible={this.state.modalVisible}
+                                        />
+                                )
                             })
                         }
                     </View>
@@ -133,6 +177,30 @@ const styles = StyleSheet.create({
     trailerTeaserBox:{
         flexWrap: "wrap",
         flexDirection: "row",
+    },
+    modal:{
+        position:"absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+    },
+    modalBox:{
+        flex: 1,
+        justifyContent:"center",
+        alignItems:"center",
+        backgroundColor:"black"
+    },
+    xBtn:{
+        backgroundColor: "#222",
+        width:48,
+        height: 48,
+        position: "absolute",
+        top: Constants.statusBarHeight + 10,
+        left: 20,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignContent: "center"
     },
 });
 
