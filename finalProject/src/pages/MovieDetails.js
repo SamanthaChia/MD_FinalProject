@@ -12,6 +12,17 @@ class MovieDetails extends Component{
         this.movieDetails = props.route.params.details;
     }
 
+    componentDidMount(){
+        return (
+            fetch('https://api.themoviedb.org/3/movie/'+ this.movieDetails.id +'/videos?api_key=a8b1207f53708946a64f6fe39f5f4881')
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    console.log(responseJson.results);
+                }).catch((error) => console.error(error))
+        );
+
+    }
+
    render(){
 
     return(
