@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, StyleSheet, Text, Image, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import React, { Component, useState } from 'react';
+import { View, StyleSheet, Text, Image, ScrollView, TouchableWithoutFeedback, Modal, Alert} from 'react-native';
 import Constants from 'expo-constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import GenreLabel from '../components/GenreLabel';
@@ -16,6 +16,7 @@ class MovieDetails extends Component{
 
     state = {
         trailerTeasers: [],
+        modalVisible: false,
     };
 
     componentDidMount(){
@@ -40,10 +41,25 @@ class MovieDetails extends Component{
 
     }
 
+
    render(){
 
     return(
         <View style={styles.container}>
+            <Modal 
+                style={styles.modal}
+                animationType="slide"
+                transparent={true}
+                statusBarTranslucent={true}
+                visible={this.state.modalVisible}
+                onRequestClose={()=>{
+                    this.setState({ modalVisible: false});
+                }}
+            >
+                <View style={{flex: 1,height :120, backgroundColor:"red"}}>
+
+                </View>
+            </Modal>
             <ScrollView>
                 <TouchableWithoutFeedback onPress = { () => this.props.navigation.pop()}>
                     <MaterialCommunityIcons 
@@ -81,7 +97,15 @@ class MovieDetails extends Component{
                     <View style={styles.trailerTeaserBox}>
                         {
                             this.state.trailerTeasers.map((item) => {
-                                return <TrailerTeaserDisplay key={item.key} poster={this.movieDetails.poster_path} trailerdata={item} />;
+                                return (
+                                        <TrailerTeaserDisplay 
+                                            key={item.key}
+                                            onPressFunction={()=> this.setState({modalVisible:true}) }
+                                            poster={this.movieDetails.poster_path}
+                                            trailerdata={item}
+                                            modalVisible={this.state.modalVisible}
+                                        />
+                                )
                             })
                         }
                     </View>
@@ -133,6 +157,13 @@ const styles = StyleSheet.create({
     trailerTeaserBox:{
         flexWrap: "wrap",
         flexDirection: "row",
+    },
+    modal:{
+        position:"absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
     },
 });
 
