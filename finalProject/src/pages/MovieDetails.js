@@ -45,7 +45,7 @@ class MovieDetails extends Component{
     return(
         <View style={styles.container}>
             <ScrollView>
-                <TouchableWithoutFeedback onPress = { () => navigation.pop()}>
+                <TouchableWithoutFeedback onPress = { () => this.props.navigation.pop()}>
                     <MaterialCommunityIcons 
                         style={{
                             position:"absolute", 
