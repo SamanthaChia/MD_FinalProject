@@ -104,6 +104,13 @@ export default class Home extends Component {
                         }
                     </View>
                 </ScrollView>
+                <View style={styles.popularMoviesBox}>
+                    <Text style={styles.headerTitle}>Recent Movies</Text>
+                    <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
+                            <Text>View All</Text>
+                            <MaterialCommunityIcons name="chevron-right" size={20} />
+                    </View>
+                </View>
             </SafeAreaView>
         )
     }
