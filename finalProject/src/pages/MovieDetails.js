@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
-import { View, StyleSheet, Text, Image, ScrollView, TouchableWithoutFeedback, Modal, Alert} from 'react-native';
+import { View, StyleSheet, Text, Image, ScrollView, TouchableWithoutFeedback, Modal} from 'react-native';
+import { WebView } from 'react-native-webview';
 import Constants from 'expo-constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import GenreLabel from '../components/GenreLabel';
@@ -57,7 +58,13 @@ class MovieDetails extends Component{
                 }}
             >
                 <View style={{flex: 1,height :120, backgroundColor:"red"}}>
-
+                    <WebView
+                        style={{flex:1}}
+                        javsScriptEnabled={true}
+                        source={{
+                            uri:"https://www.youtube.com/watch?v=TX0dQI13gsA?rel=0&autoplay&showinfo=0&controls=0",
+                        }}
+                    />
                 </View>
             </Modal>
             <ScrollView>
