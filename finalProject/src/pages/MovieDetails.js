@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import { View, StyleSheet, Text, Image, ScrollView, TouchableWithoutFeedback, Modal} from 'react-native';
-import { WebView } from 'react-native-webview';
+import YoutubePlayer from "react-native-youtube-iframe";
 import Constants from 'expo-constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import GenreLabel from '../components/GenreLabel';
@@ -18,6 +18,7 @@ class MovieDetails extends Component{
     state = {
         trailerTeasers: [],
         modalVisible: false,
+        activeMovieTrailerKey: "",
     };
 
     componentDidMount(){
@@ -57,14 +58,23 @@ class MovieDetails extends Component{
                     this.setState({ modalVisible: false});
                 }}
             >
-                <View style={{flex: 1,height :120, backgroundColor:"red"}}>
-                    <WebView
-                        style={{flex:1}}
-                        javsScriptEnabled={true}
-                        source={{
-                            uri:"https://www.youtube.com/watch?v=TX0dQI13gsA?rel=0&autoplay&showinfo=0&controls=0",
-                        }}
-                    />
+                <View style={styles.modalBox}>
+                    <View style={styles.xBtn}>
+                        <TouchableWithoutFeedback onPress = { () => this.setState({modalVisible: false})}>
+                        <MaterialCommunityIcons 
+                            name="close"
+                            size={20}
+                            color={"white"}
+                        />
+                    </TouchableWithoutFeedback>
+                    </View>
+                    <View style={{width: "100%"}}>
+                        <YoutubePlayer
+                            height={300}
+                            play={true}
+                            videoId={this.state.activeMovieTrailerKey}
+                        />
+                     </View>
                 </View>
             </Modal>
             <ScrollView>
@@ -107,7 +117,10 @@ class MovieDetails extends Component{
                                 return (
                                         <TrailerTeaserDisplay 
                                             key={item.key}
-                                            onPressFunction={()=> this.setState({modalVisible:true}) }
+                                            onPressFunction={()=> this.setState({
+                                                modalVisible:true,
+                                                activeMovieTrailerKey: item.key
+                                            })}
                                             poster={this.movieDetails.poster_path}
                                             trailerdata={item}
                                             modalVisible={this.state.modalVisible}
@@ -171,6 +184,23 @@ const styles = StyleSheet.create({
         left: 0,
         width: "100%",
         height: "100%",
+    },
+    modalBox:{
+        flex: 1,
+        justifyContent:"center",
+        alignItems:"center",
+        backgroundColor:"black"
+    },
+    xBtn:{
+        backgroundColor: "#222",
+        width:48,
+        height: 48,
+        position: "absolute",
+        top: Constants.statusBarHeight + 10,
+        left: 20,
+        borderRadius: 10,
+        justifyContent: "center",
+        alignContent: "center"
     },
 });
 
