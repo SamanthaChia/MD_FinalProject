@@ -4,6 +4,7 @@ import Constants from 'expo-constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MovieComp from '../components/MovieComp';
 import Movie from '../models/Movie';
+import NowPlayingMovies from '../components/NowPlayingMovies';
 
 export default class Home extends Component {
     // initialise
@@ -14,9 +15,8 @@ export default class Home extends Component {
 
     state = {
         isLoading: false,
-        recentMovies: [],
+        nowPlayingMovies: [],
         popularMovies: [],
-        recentMovies: [], 
     };
     
     constructor(props){
@@ -67,10 +67,42 @@ export default class Home extends Component {
                     });
                 }
 
-            fetch(this.baseURL + "latest?api_key=" + this.apiKey)
+            // Get the most newly created movie. This is a live response and will continuously change.
+            fetch(this.baseURL + "now_playing?api_key=" + this.apiKey)
                 .then((response) => response.json())
                 .then((responseJson) => {
-                    console.log(responseJson);
+                    var nowPlayingMoviesData = [];
+                    var allGenres = this.genres;
+                    responseJson.results.forEach((movie) => {
+                        // movie.genres as an array to store it all in and push into data
+                        movie.genres = [];
+                        movie.genre_ids.forEach((genreId) => {
+                            var genreData = allGenres.filter((x) => x.id === genreId);
+                            if (genreData.length != 0) {
+                                movie.genres.push(genreData[0].name);
+                            }
+                        });
+    
+                        nowPlayingMoviesData.push(new Movie({
+                            id: movie.id,
+                            title: movie.title,
+                            poster_path: movie.poster_path,
+                            overview: movie.overview,
+                            genre_ids: movie.genre_ids,
+                            release_date: movie.release_date,
+                            popularity: movie.popularity,
+                            vote_count: movie.vote_count,
+                            vote_average: movie.vote_average,
+                            genre: movie.genres,
+                            })
+                        );
+                    });
+                    
+                    if(this._isMount){
+                        this.setState({
+                            nowPlayingMovies: nowPlayingMoviesData,
+                        });
+                    }
                 })
                 .catch((error) => console.error(error));
             })
@@ -106,7 +138,7 @@ export default class Home extends Component {
                             {
                                 this.state.popularMovies.map((item, index) => {
                                     // key to remove key child warning 
-                                    return index < 4 ? (
+                                    return index < 5 ? (
                                         <MovieComp key={item.id} item={item} />
                                     ) :
                                     ( <View key={item.id} />
@@ -115,14 +147,27 @@ export default class Home extends Component {
                             }
                         </View>
                     </ScrollView>
+
                     <View style={styles.popularMoviesBox}>
-                        <Text style={styles.headerTitle}>Recent Movies</Text>
+                        <Text style={styles.headerTitle}>Now Playing</Text>
                         <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
                                 <Text>View All</Text>
                                 <MaterialCommunityIcons name="chevron-right" size={20} />
                         </View>
                     </View>
+                    <View style={styles.nowPlayingMovies}>
+                        {
+                            this.state.nowPlayingMovies.map((item, index) => {
 
+                                // key to remove key child warning 
+                                return index < 5 ? (
+                                <NowPlayingMovies key={item.id} item={item} />
+                                ) :
+                                ( <View key={item.id} />
+                                );
+                            })
+                        }
+                    </View>
               </ScrollView>
             </SafeAreaView>
         )
@@ -139,6 +184,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flex: 1,
         paddingLeft: 20,
+    },
+    nowPlayingMovies:{
+        paddingHorizontal: 20
     },
     header:{
         width: "100%",
