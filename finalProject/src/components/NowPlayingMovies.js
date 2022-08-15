@@ -17,6 +17,12 @@ function NowPlayingMovies(props){
                 <Image style={[styles.poster, {width:widthVal}]} source={{uri:"http://image.tmdb.org/t/p/w342/" + props.item.poster_path}} />
                 <View style={styles.descriptionBox}>
                     <Text style={{width:widthVal}}>{props.item.title}</Text>
+                    <Text style={[{width: widthVal}, styles.genreText]}>{props.item.genre.map(
+                            (genre, index) => 
+                                genre + (index < props.item.genre.length - 1 ? ", " : "" )
+                            )}
+                    </Text>
+
                     <View style={styles.ratingAvg}>
                         <MaterialCommunityIcons name="star" size={20} color="#EDD622" />
                         <Text style={{fontWeight: "bold", alignSelf:"center"}}>{props.item.vote_average}</Text>
@@ -41,9 +47,15 @@ const styles = StyleSheet.create({
     descriptionBox:{
         marginLeft: 10,
     },
+    genreText:{
+        fontSize: 13,
+        fontWeight:"200",
+        marginTop: 5,
+    },
     ratingAvg:{
         flexDirection: "row",
         flexWrap: "wrap",
+        marginTop: 5,
     }
 });
 
