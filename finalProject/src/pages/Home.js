@@ -16,6 +16,7 @@ export default class Home extends Component {
         isLoading: false,
         recentMovies: [],
         popularMovies: [],
+        recentMovies: [], 
     };
     
     constructor(props){
@@ -65,9 +66,17 @@ export default class Home extends Component {
                         popularMovies: popularMovieData,
                     });
                 }
+
+            fetch(this.baseURL + "latest?api_key=" + this.apiKey)
+                .then((response) => response.json())
+                .then((responseJson) => {
+                    console.log(responseJson);
+                })
+                .catch((error) => console.error(error));
             })
+
             .catch((error) => console.error(error))
-            )
+        );
     }
 
     componentWillUnmount(){
