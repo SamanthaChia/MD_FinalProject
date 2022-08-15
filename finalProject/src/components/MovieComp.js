@@ -2,19 +2,26 @@ import React from "react";
 import { View, Text, StyleSheet, Image, TouchableWithoutFeedback } from 'react-native';
 
 import { useNavigation } from '@react-navigation/native';
+import { ThemeContext } from "../contexts/ThemeContext";
 
 function MovieComp(props){
 
     const navigation = useNavigation();
 
     return(
-        //  pass details for props through navigation, as details.
-        <TouchableWithoutFeedback onPress= {() => navigation.navigate('MovieDetails', { details: props.item })}>
-            <View style={styles.container}>
-                <Image style={styles.poster} source={{uri:"http://image.tmdb.org/t/p/w342/" + props.item.poster_path}} />
-                <Text>{props.item.title}</Text>
-            </View>
-        </TouchableWithoutFeedback>
+        <ThemeContext.Consumer>
+            {(context) => {
+                const { boolDarkMode, light, dark} = context;
+                return(
+                    <TouchableWithoutFeedback onPress= {() => navigation.navigate('MovieDetails', { details: props.item })}>
+                        <View style={styles.container}>
+                            <Image style={styles.poster} source={{uri:"http://image.tmdb.org/t/p/w342/" + props.item.poster_path}} />
+                            <Text style={{color:boolDarkMode ? light.bg : dark.bg}}>{props.item.title}</Text>
+                        </View>
+                    </TouchableWithoutFeedback>
+                );
+            }}
+        </ThemeContext.Consumer>
     );
 }
 

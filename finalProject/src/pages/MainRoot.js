@@ -10,6 +10,9 @@ import Settings from './Settings';
 const Tab = createBottomTabNavigator();
 
 class MainRoot extends Component{
+    // initialise
+    baseURL = "https://api.themoviedb.org/3/genre/movie/";
+    apiKey = "a8b1207f53708946a64f6fe39f5f4881";
 
     state={
         isLoading: true,
@@ -18,7 +21,7 @@ class MainRoot extends Component{
 
     componentDidMount(){
         return(
-            fetch('https://api.themoviedb.org/3/genre/movie/list?api_key=a8b1207f53708946a64f6fe39f5f4881')
+            fetch(this.baseURL + 'list?api_key=' + this.apiKey)
             .then((response) => response.json())
             .then((responseJson) => {
                 this.setState({
