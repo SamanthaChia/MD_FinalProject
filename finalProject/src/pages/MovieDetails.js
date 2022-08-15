@@ -110,8 +110,8 @@ class MovieDetails extends Component{
                                         <Text style={[styles.title,{color:boolDarkMode ? light.bg : dark.bg}]}>{this.movieDetails.title}</Text>
                                         <Text style={{color:boolDarkMode ? light.bg : dark.bg}}>{this.movieDetails.release_date}</Text>
                                     </View>
-                                    <View style={styles.averageScore}>
-                                        <Text>{this.movieDetails.vote_average}</Text>
+                                    <View style={[styles.averageScore, {backgroundColor:boolDarkMode ? light.bg : dark.bg}]}>
+                                        <Text style={{color:boolDarkMode ? dark.bg : light.bg}}>{this.movieDetails.vote_average}</Text>
                                     </View>
                                 </View>
                                 <GenreLabel data={this.movieDetails.genre} />
