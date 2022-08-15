@@ -29,4 +29,11 @@ class ThemeContextProvider extends Component {
         this.getboolDarkMode();
     }
 
+    changeTheme = async () => {
+        await AsyncStorage.setItem(
+            "boolDarkMode",
+            !this.state.boolDarkMode == false? "false" : "true"
+        );
+        this.setState({ boolDarkMode: !this.state.boolDarkMode});
+    };
 }
