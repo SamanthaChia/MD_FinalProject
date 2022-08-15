@@ -120,7 +120,7 @@ export default class Home extends Component {
         return (
             <ThemeContext.Consumer>
                 {(context) => {
-                    const { boolDarkMode, light, dark, updateTheme } = context;
+                    const { boolDarkMode, light, dark } = context;
                     return(
                         <SafeAreaView style={[styles.container,{backgroundColor:boolDarkMode ? dark.bg : light.bg}]}>
                         <View style={styles.header}>
