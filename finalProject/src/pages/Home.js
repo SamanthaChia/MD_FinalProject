@@ -7,6 +7,8 @@ import Movie from '../models/Movie';
 
 export default class Home extends Component {
     // initialise
+    baseURL = "https://api.themoviedb.org/3/movie/";
+    apiKey = "a8b1207f53708946a64f6fe39f5f4881";
     _isMount = false;
     genres = [];
 
@@ -28,7 +30,7 @@ export default class Home extends Component {
         
         // retrieve data from tmdb api
         return(
-            fetch('https://api.themoviedb.org/3/movie/popular?api_key=a8b1207f53708946a64f6fe39f5f4881')
+            fetch(this.baseURL + 'popular?api_key=' + this.apiKey)
             .then(response => response.json())
             .then(responseJson => {
                 var popularMovieData = [];
@@ -79,38 +81,40 @@ export default class Home extends Component {
                     <Text style={styles.appName} >App Name</Text>
                     <MaterialCommunityIcons name="magnify" size={27} />
                 </View>
-                
+              <ScrollView>  
                 <View style={styles.popularMoviesBox}>
-                    <Text style={styles.headerTitle}>Popular Movies</Text>
-                    <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
-                            <Text>View All</Text>
-                            <MaterialCommunityIcons name="chevron-right" size={20} />
+                        <Text style={styles.headerTitle}>Popular Movies</Text>
+                        <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
+                                <Text>View All</Text>
+                                <MaterialCommunityIcons name="chevron-right" size={20} />
+                        </View>
                     </View>
-                </View>
 
-                <ScrollView 
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}>
-                    <View style={styles.popularHome}>
-                        {
-                            this.state.popularMovies.map((item, index) => {
-                                // key to remove key child warning 
-                                return index < 4 ? (
-                                    <MovieComp key={item.id} item={item} />
-                                 ) :
-                                 ( <View key={item.id} />
-                                 );
-                            })
-                        }
+                    <ScrollView 
+                        horizontal={true}
+                        showsHorizontalScrollIndicator={false}>
+                        <View style={styles.popularHome}>
+                            {
+                                this.state.popularMovies.map((item, index) => {
+                                    // key to remove key child warning 
+                                    return index < 4 ? (
+                                        <MovieComp key={item.id} item={item} />
+                                    ) :
+                                    ( <View key={item.id} />
+                                    );
+                                })
+                            }
+                        </View>
+                    </ScrollView>
+                    <View style={styles.popularMoviesBox}>
+                        <Text style={styles.headerTitle}>Recent Movies</Text>
+                        <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
+                                <Text>View All</Text>
+                                <MaterialCommunityIcons name="chevron-right" size={20} />
+                        </View>
                     </View>
-                </ScrollView>
-                <View style={styles.popularMoviesBox}>
-                    <Text style={styles.headerTitle}>Recent Movies</Text>
-                    <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
-                            <Text>View All</Text>
-                            <MaterialCommunityIcons name="chevron-right" size={20} />
-                    </View>
-                </View>
+
+              </ScrollView>
             </SafeAreaView>
         )
     }
@@ -132,7 +136,7 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         justifyContent:"space-between",
         paddingHorizontal: 20,
-        marginBottom: 10,
+        marginVertical: 10,
     },
     appName:{
         fontSize: 25,
@@ -147,6 +151,6 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         paddingHorizontal: 20,
-        marginBottom: 10,
+        marginVertical: 10,
     }
 })
