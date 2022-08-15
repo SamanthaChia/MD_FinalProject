@@ -36,4 +36,12 @@ class ThemeContextProvider extends Component {
         );
         this.setState({ boolDarkMode: !this.state.boolDarkMode});
     };
+
+    render(){
+        return(
+            <ThemeContext.Provider value={{ ...this.state, updateTheme: this.changeTheme }}>
+                {this.props.children}
+            </ThemeContext.Provider>
+        );
+    }
 }
