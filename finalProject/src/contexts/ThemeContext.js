@@ -19,4 +19,14 @@ class ThemeContextProvider extends Component {
         }
     };
 
+    constructor(){
+        super();
+        this.state = {
+            boolDarkMode: false,
+            light: {bg: "FFF"},
+            dark: {bg: "#2d2d2d"},
+        };
+        this.getboolDarkMode();
+    }
+
 }
