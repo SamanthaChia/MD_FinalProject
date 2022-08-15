@@ -35,7 +35,7 @@ class MainRoot extends Component{
 
     render() {
         const HomeComponent = (props) => (
-         <Home genres={this.state.genres}/>
+         <Home {...props} genres={this.state.genres}/>
         );
 
         if(this.state.isLoading){

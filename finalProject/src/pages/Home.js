@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, ScrollView, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, View, ScrollView, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import Constants from 'expo-constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MovieComp from '../components/MovieComp';
@@ -130,10 +130,18 @@ export default class Home extends Component {
                         <ScrollView>  
                             <View style={styles.popularMoviesBox}>
                                 <Text style={[styles.headerTitle, {color:boolDarkMode ? light.bg : dark.bg}]}>Popular Movies</Text>
-                                <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
-                                        <Text style={{color:boolDarkMode ? light.bg : dark.bg}}>View All</Text>
-                                        <MaterialCommunityIcons name="chevron-right" size={20} style={{color:boolDarkMode ? light.bg : dark.bg}}/>
-                                </View>
+                                <TouchableWithoutFeedback
+                                    onPress={() => {
+                                        this.props.navigation.navigate("ViewAll", {
+                                            genres: this.genres,
+                                            isPopular: false,
+                                        })
+                                    }}>
+                                    <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
+                                            <Text style={{color:boolDarkMode ? light.bg : dark.bg}}>View All</Text>
+                                            <MaterialCommunityIcons name="chevron-right" size={20} style={{color:boolDarkMode ? light.bg : dark.bg}}/>
+                                    </View>
+                                </TouchableWithoutFeedback>
                             </View>
 
                             <ScrollView 
