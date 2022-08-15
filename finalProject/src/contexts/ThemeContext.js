@@ -1,6 +1,6 @@
 import React, { Component, createContext } from "react";
 export const ThemeContext = createContext();
-import { AsyncStorage } from "@react-native-async-storage/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 class ThemeContextProvider extends Component {
     getboolDarkMode = async() => {
@@ -11,7 +11,7 @@ class ThemeContextProvider extends Component {
                 await AsyncStorage.setItem("boolDarkMode", "false");
             } else{
                 if(value == "true"){
-                    this.setState({ boolDarkMode: true})
+                    this.setState({ boolDarkMode: true});
                 }
             }
         } catch (e) {
@@ -23,7 +23,7 @@ class ThemeContextProvider extends Component {
         super();
         this.state = {
             boolDarkMode: false,
-            light: {bg: "FFF"},
+            light: {bg: "#FFF"},
             dark: {bg: "#2d2d2d"},
         };
         this.getboolDarkMode();
@@ -32,7 +32,7 @@ class ThemeContextProvider extends Component {
     changeTheme = async () => {
         await AsyncStorage.setItem(
             "boolDarkMode",
-            !this.state.boolDarkMode == false? "false" : "true"
+            !this.state.boolDarkMode == false ? "false" : "true"
         );
         this.setState({ boolDarkMode: !this.state.boolDarkMode});
     };
@@ -45,3 +45,5 @@ class ThemeContextProvider extends Component {
         );
     }
 }
+
+export default ThemeContextProvider;
