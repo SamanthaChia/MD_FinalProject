@@ -8,6 +8,9 @@ import TrailerTeaser from '../models/TrailerTeaser';
 import TrailerTeaserDisplay from '../components/TrailerTeaserDisplay';
 
 class MovieDetails extends Component{
+    // initialise
+    baseURL = "https://api.themoviedb.org/3/movie/";
+    apiKey = "a8b1207f53708946a64f6fe39f5f4881";
     movieDetails = null;
 
     constructor(props){
@@ -23,7 +26,7 @@ class MovieDetails extends Component{
 
     componentDidMount(){
         return (
-            fetch('https://api.themoviedb.org/3/movie/'+ this.movieDetails.id +'/videos?api_key=a8b1207f53708946a64f6fe39f5f4881')
+            fetch(this.baseURL + this.movieDetails.id +'/videos?api_key=' + this.apiKey)
                 .then((response) => response.json())
                 .then((responseJson) => {
                     var items = [];
