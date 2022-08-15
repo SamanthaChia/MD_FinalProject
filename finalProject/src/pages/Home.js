@@ -5,6 +5,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import MovieComp from '../components/MovieComp';
 import Movie from '../models/Movie';
 import NowPlayingMovies from '../components/NowPlayingMovies';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 export default class Home extends Component {
     // initialise
@@ -117,59 +118,66 @@ export default class Home extends Component {
 
     render() {
         return (
-            <SafeAreaView style={styles.container}>
-                <View style={styles.header}>
-                    <Text style={styles.appName} >App Name</Text>
-                    <MaterialCommunityIcons name="magnify" size={27} />
-                </View>
-              <ScrollView>  
-                <View style={styles.popularMoviesBox}>
-                        <Text style={styles.headerTitle}>Popular Movies</Text>
-                        <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
-                                <Text>View All</Text>
-                                <MaterialCommunityIcons name="chevron-right" size={20} />
+            <ThemeContext.Consumer>
+                {(context) => {
+                    const { boolDarkMode, light, dark, updateTheme } = context;
+                    return(
+                        <SafeAreaView style={[styles.container,{backgroundColor:boolDarkMode ? dark.bg : light.bg}]}>
+                        <View style={styles.header}>
+                            <Text style={[styles.appName, {color:boolDarkMode ? light.bg : dark.bg}]} >App Name</Text>
+                            <MaterialCommunityIcons name="magnify" size={27} style={{color:boolDarkMode ? light.bg : dark.bg}} />
                         </View>
-                    </View>
+                        <ScrollView>  
+                            <View style={styles.popularMoviesBox}>
+                                <Text style={[styles.headerTitle, {color:boolDarkMode ? light.bg : dark.bg}]}>Popular Movies</Text>
+                                <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
+                                        <Text style={{color:boolDarkMode ? light.bg : dark.bg}}>View All</Text>
+                                        <MaterialCommunityIcons name="chevron-right" size={20} style={{color:boolDarkMode ? light.bg : dark.bg}}/>
+                                </View>
+                            </View>
 
-                    <ScrollView 
-                        horizontal={true}
-                        showsHorizontalScrollIndicator={false}>
-                        <View style={styles.popularHome}>
-                            {
-                                this.state.popularMovies.map((item, index) => {
-                                    // key to remove key child warning 
-                                    return index < 5 ? (
-                                        <MovieComp key={item.id} item={item} />
-                                    ) :
-                                    ( <View key={item.id} />
-                                    );
-                                })
-                            }
-                        </View>
+                            <ScrollView 
+                                horizontal={true}
+                                showsHorizontalScrollIndicator={false}>
+                                <View style={styles.popularHome}>
+                                    {
+                                        this.state.popularMovies.map((item, index) => {
+                                            // key to remove key child warning 
+                                            return index < 5 ? (
+                                                <MovieComp key={item.id} item={item} />
+                                            ) :
+                                            ( <View key={item.id} />
+                                            );
+                                        })
+                                    }
+                                </View>
+                            </ScrollView>
+
+                            <View style={styles.popularMoviesBox}>
+                                <Text style={[styles.headerTitle, {color:boolDarkMode ? light.bg : dark.bg}]}>Now Playing</Text>
+                                <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
+                                        <Text style={{color:boolDarkMode ? light.bg : dark.bg}}>View All</Text>
+                                        <MaterialCommunityIcons name="chevron-right" size={20} style={{color:boolDarkMode ? light.bg : dark.bg}}/>
+                                </View>
+                            </View>
+                            <View style={styles.nowPlayingMovies}>
+                                {
+                                    this.state.nowPlayingMovies.map((item, index) => {
+
+                                        // key to remove key child warning 
+                                        return index < 5 ? (
+                                        <NowPlayingMovies key={item.id} item={item} />
+                                        ) :
+                                        ( <View key={item.id} />
+                                        );
+                                    })
+                                }
+                            </View>
                     </ScrollView>
-
-                    <View style={styles.popularMoviesBox}>
-                        <Text style={styles.headerTitle}>Now Playing</Text>
-                        <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
-                                <Text>View All</Text>
-                                <MaterialCommunityIcons name="chevron-right" size={20} />
-                        </View>
-                    </View>
-                    <View style={styles.nowPlayingMovies}>
-                        {
-                            this.state.nowPlayingMovies.map((item, index) => {
-
-                                // key to remove key child warning 
-                                return index < 5 ? (
-                                <NowPlayingMovies key={item.id} item={item} />
-                                ) :
-                                ( <View key={item.id} />
-                                );
-                            })
-                        }
-                    </View>
-              </ScrollView>
-            </SafeAreaView>
+                    </SafeAreaView>
+                    );
+                }}
+            </ThemeContext.Consumer>
         )
     }
 }
