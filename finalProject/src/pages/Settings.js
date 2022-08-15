@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
+import { SafeAreaView, View, Text, Switch, StyleSheet } from 'react-native';
+import Constants from "expo-constants";
 
 export default class Settings extends Component {
     render() {
