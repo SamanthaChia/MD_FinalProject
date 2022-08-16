@@ -22,10 +22,11 @@ function NowPlayingMovies(props){
                         <Image style={[styles.poster, {width:widthVal}]} source={{uri:"http://image.tmdb.org/t/p/w342/" + props.item.poster_path}} />
                         <View style={styles.descriptionBox}>
                             <Text style={{width:widthVal, color:boolDarkMode ? light.bg : dark.bg}}>{props.item.title}</Text>
-                            <Text style={[{width: widthVal, color:boolDarkMode ? light.bg : dark.bg}, styles.genreText]}>{props.item.genre.map(
+                            <Text style={[{width: widthVal, color:boolDarkMode ? light.bg : dark.bg}, styles.genreText]}>
+                                {props.item.genre.map(
                                     (genre, index) => 
                                         genre + (index < props.item.genre.length - 1 ? ", " : "" )
-                                    )}
+                                )}
                             </Text>
 
                             <View style={styles.ratingAvg}>

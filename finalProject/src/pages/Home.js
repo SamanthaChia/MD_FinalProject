@@ -33,8 +33,8 @@ export default class Home extends Component {
         // retrieve data from tmdb api
         return(
             fetch(this.baseURL + 'popular?api_key=' + this.apiKey)
-            .then(response => response.json())
-            .then(responseJson => {
+            .then((response) => response.json())
+            .then((responseJson) => {
                 var popularMovieData = [];
                 var allGenres = this.genres;
                 responseJson.results.forEach((movie) => {
@@ -134,7 +134,7 @@ export default class Home extends Component {
                                     onPress={() => {
                                         this.props.navigation.navigate("ViewAll", {
                                             genres: this.genres,
-                                            isPopular: false,
+                                            isPopular: true,
                                         })
                                     }}>
                                     <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
@@ -163,10 +163,19 @@ export default class Home extends Component {
 
                             <View style={styles.popularMoviesBox}>
                                 <Text style={[styles.headerTitle, {color:boolDarkMode ? light.bg : dark.bg}]}>Now Playing</Text>
-                                <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
-                                        <Text style={{color:boolDarkMode ? light.bg : dark.bg}}>View All</Text>
-                                        <MaterialCommunityIcons name="chevron-right" size={20} style={{color:boolDarkMode ? light.bg : dark.bg}}/>
-                                </View>
+                                <TouchableWithoutFeedback
+                                    onPress={() => {
+                                        this.props.navigation.navigate("ViewAll", {
+                                            genres: this.genre,
+                                            isPopular: false,
+                                        })
+                                    }}
+                                >
+                                    <View style={{flexDirection: "row", flexWrap: "wrap", alignItems: "center"}}>
+                                            <Text style={{color:boolDarkMode ? light.bg : dark.bg}}>View All</Text>
+                                            <MaterialCommunityIcons name="chevron-right" size={20} style={{color:boolDarkMode ? light.bg : dark.bg}}/>
+                                    </View>
+                                </TouchableWithoutFeedback>
                             </View>
                             <View style={styles.nowPlayingMovies}>
                                 {

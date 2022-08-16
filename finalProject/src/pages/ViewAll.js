@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, Text, StyleSheet, ActivityIndicator, TouchableWithoutFeedback, FlatList } from 'react-native';
+import { View, Text, StyleSheet, ActivityIndicator, TouchableWithoutFeedback, FlatList } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ThemeContext } from '../contexts/ThemeContext';
 import Movie from '../models/Movie';
 import NowPlayingMovies from '../components/NowPlayingMovies';
-import { ThemeProvider } from '@react-navigation/native';
 
 class ViewAll extends Component {
     baseURL = "https://api.themoviedb.org/3/movie/";
@@ -56,7 +55,7 @@ class ViewAll extends Component {
                                 release_date: movie.release_date,
                                 vote_average: movie.vote_average,
                                 vote_count: movie.vote_count,
-                                genres: movie.genre,
+                                genre: movie.genres,
                             })
                         );
                     }
@@ -67,7 +66,7 @@ class ViewAll extends Component {
                 }
 
                 this.setState({
-                    data:movieData,
+                    data: movieData,
                     page: page,
                     isLoading: false,
                 });
@@ -101,15 +100,13 @@ class ViewAll extends Component {
                         return(
                             <View style={[styles.container, {backgroundColor: boolDarkMode ? dark.bg : light.bg }]}>
                                 <StatusBar style={boolDarkMode ? "light" : "dark"} />
-                                <TouchableWithoutFeedback
-                                    onPress = {() => this.props.navigation.pop()}>
+                                <TouchableWithoutFeedback onPress = {() => this.props.navigation.pop()}>
                                         <View style={styles.backBtn}>
-                                            <MaterialCommunityIcons name="chevron-left" color={boolDarkMode ? light.bg : dark.bg} size={30} />
-                                            <Text style={[styles.title, {color:boolDarkMode ? light.bg : dark.bg}]}>View All</Text>
+                                            <MaterialCommunityIcons name="chevron-left" color={boolDarkMode ? light.bg : dark.bg} size={25} />
+                                            <Text style={[styles.headerText, {color:boolDarkMode ? light.bg : dark.bg}]}>View All</Text>
                                         </View>
                                     </TouchableWithoutFeedback>
-                                    {console.log(this.state.data)}
-                                    {/* <FlatList
+                                    <FlatList
                                         style={{paddingHorizontal: 20}}
                                         data = {this.state.data}
                                         keyExtractor={(item) => 
@@ -117,9 +114,9 @@ class ViewAll extends Component {
                                         }
                                         onEndReached={this.updatePage}
                                         renderItem={({item}) => {
-                                            return <NowPlayingMovies item= {item}/>;
+                                            return <NowPlayingMovies item={item} />;
                                         }}
-                                    /> */}
+                                    />
                             </View>
                         );
                     }}
@@ -133,14 +130,18 @@ class ViewAll extends Component {
 const styles = StyleSheet.create({
     container:{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
+        paddingTop: Constants.statusBarHeight + 10,
     },
     backBtn:{
         flexDirection: "row",
         flexWrap: "wrap",
         alignItems: "center",
         paddingLeft: 10,
+        marginBottom: 10,
+    },
+    headerText:{
+        fontWeight: "bold",
+        fontSize: 23,
     },
 })
 
