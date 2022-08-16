@@ -166,7 +166,7 @@ export default class Home extends Component {
                                 <TouchableWithoutFeedback
                                     onPress={() => {
                                         this.props.navigation.navigate("ViewAll", {
-                                            genres: this.genre,
+                                            genres: this.genres,
                                             isPopular: false,
                                         })
                                     }}
