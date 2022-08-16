@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, ScrollView, Text, StyleSheet, TouchableWithoutFeedback, Dimensions } from 'react-native';
+import { SafeAreaView, View, ScrollView, Text, StyleSheet, TouchableWithoutFeedback, Dimensions, Animated } from 'react-native';
 import { ThemeContext } from '../contexts/ThemeContext';
 import Constants from 'expo-constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MovieComp from '../components/MovieComp';
 import Movie from '../models/Movie';
 import NowPlayingMovies from '../components/NowPlayingMovies';
+import Autocomplete from "react-native-autocomplete-input";
 
 export default class Home extends Component {
     // initialise
@@ -19,6 +20,11 @@ export default class Home extends Component {
         isLoading: false,
         nowPlayingMovies: [],
         popularMovies: [],
+        queryResults: [],
+        query: "",
+        iconName: "magnify",
+        isAnimating: false,
+        fadeAnim: new Animated.Value(40),
     };
     
     constructor(props){
