@@ -50,6 +50,7 @@ class MainRoot extends Component{
                     tabBarActiveTintColor: "#84DCC6",
                     tabBarInactiveTintColor: "#95A3B3",
                     headerShown: false,
+                    tabBarHideOnKeyboard: true,
                 }}
                 initialRouteName = "Home"
             >

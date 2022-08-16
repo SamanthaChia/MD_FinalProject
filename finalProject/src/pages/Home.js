@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-import { SafeAreaView, View, ScrollView, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
+import { SafeAreaView, View, ScrollView, Text, StyleSheet, TouchableWithoutFeedback, Dimensions, Animated } from 'react-native';
+import { ThemeContext } from '../contexts/ThemeContext';
 import Constants from 'expo-constants';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import MovieComp from '../components/MovieComp';
 import Movie from '../models/Movie';
 import NowPlayingMovies from '../components/NowPlayingMovies';
-import { ThemeContext } from '../contexts/ThemeContext';
 
 export default class Home extends Component {
     // initialise
+    deviceWidth = Dimensions.get("window").width;
     baseURL = "https://api.themoviedb.org/3/movie/";
     apiKey = "a8b1207f53708946a64f6fe39f5f4881";
     _isMount = false;
@@ -18,6 +19,11 @@ export default class Home extends Component {
         isLoading: false,
         nowPlayingMovies: [],
         popularMovies: [],
+        queryResults: [],
+        query: "",
+        iconName: "magnify",
+        isAnimating: false,
+        fadeAnim: new Animated.Value(40),
     };
     
     constructor(props){
@@ -203,6 +209,7 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         padding: 5,
+        marginTop: Constants.statusBarHeight,
     },
     popularHome:{
         flexDirection: "row",
