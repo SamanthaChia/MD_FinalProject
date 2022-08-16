@@ -7,6 +7,9 @@ function TrailerTeaserDisplay(props){
     const deviceWidth = Dimensions.get("window").width;
     var posterWidth = (deviceWidth - 50) /2;
     var leftPosition = (posterWidth - 24) /2;
+
+    const thumbnail = "https://img.youtube.com/vi/" + props.trailerdata.key + "/hqdefault.jpg";
+
     return(
         <ThemeContext.Consumer>
             {(context) => {
@@ -27,7 +30,7 @@ function TrailerTeaserDisplay(props){
                                         size={24}
                                         color={"#fff"}
                             />
-                            <Image resizeMode="cover" style={{width: posterWidth, height: 100, marginBottom: 5}} source={{uri:"http://image.tmdb.org/t/p/w342/" + props.poster}} />
+                            <Image resizeMode="cover" style={{width: posterWidth, height: 100, marginBottom: 5}} source={{uri: thumbnail}} />
                             <Text style={[styles.trailerName, {color:boolDarkMode ? light.bg : dark.bg}]}>{props.trailerdata.name}</Text>
                         </View>
                     </TouchableWithoutFeedback>
