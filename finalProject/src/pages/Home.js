@@ -32,6 +32,88 @@ export default class Home extends Component {
         this.genres = props.genres;
     }
 
+    //dealing with the search query 
+    searchQuery = (query) =>{
+        return(
+            fetch(
+                "https://api.themoviedb.org/3/search/movie?api_key=" + this.apiKey + "&language=en-US&query=" + query
+            )
+            .then((response) => response.json())
+            .then((responseJson) => {
+                const movieData = [];
+                var allGenres = this.genres;
+                responseJson.results.forEach((movie) => {
+                    movie.genres = [];
+                    movie.genre_ids.forEach((genreid) => {
+                        var genreData = allGenres.filter((x) => x.id == genreid);
+                        if(genreData.length != 0){
+                            movie.genres.push(genreData[0].name);
+                        }
+                    });
+
+                    movieData.push(
+                        new Movie({
+                            id: movie.id,
+                            title: movie.title,
+                            poster_path: "http://image.tmdb.org/t/p/w342/" + movie.poster_path,
+                            backdrop_path: "http://image.tmmdv.org/t/p/w500/" + movie.backdrop_path,
+                            genre_ids: movie.genre_ids,
+                            overview: movie.overview,
+                            popularity: movie.popularity,
+                            release_date: movie.release_date,
+                            vote_average: movie.vote_average,
+                            vote_count: movie.vote_count,
+                            genre: movie.genres,
+                        })
+                    );
+                    this.setState({query: query, queryResults: movieData});
+                });
+            })
+        )
+    } 
+
+    openSearch = () => {
+        this.setState({ isAnimating: true});
+
+        this.state.fadeAnim._value != this.deviceWidth - 40
+            ? Animated.timing(this.state.fadeAnim, {
+                toValue: this.deviceWidth - 40,
+                duration: 500,
+                useNativeDriver: false,
+                })
+            : Animated.timing(this.state.fadeAnim, {
+                toValue: 40,
+                duration: 500,
+                useNativeDriver: false,
+            }).start(() => {
+                this.setState({ iconName: "magnify", query: "", queryResults: []});
+                this.setState({ isAnimating: false });
+            });
+    };
+
+    renderRectangle = (context) =>{
+        const { boolDarkMode, light, dark } = context;
+        const CustomStyle = {
+            width: this.state.fadeAnim,
+        };
+
+        return(
+            <Animated.View style={[styles.rectangle, CustomStyle]}>
+                <TouchableWithoutFeedback
+                    style={{
+                        width:40,
+                        height:40,
+                        justifyContent: "center",
+                        alignItems: "center"
+                    }}
+                    onPress={() => this.searchQuery()}
+                >
+                    <MaterialCommunityIcons name={this.state.iconName} color={boolDarkMode ? light.bg : dark.bg} size={24} />
+                </TouchableWithoutFeedback>
+            </Animated.View>
+        );
+    };
+
     //what will happen when view is mounted
     componentDidMount(){
         this._isMount = true;
