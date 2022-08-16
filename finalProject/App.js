@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';  
 import MainRoot from './src/pages/MainRoot';
 import MovieDetails from './src/pages/MovieDetails';
+import ViewAll from './src/pages/ViewAll';
 import ThemeContextProvider from './src/contexts/ThemeContext';
 
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,11 @@ export default function App() {
             name="MovieDetails"
             component={MovieDetails}
             options={{ title: 'MovieDetails' }}
+          />
+          <Stack.Screen
+            name="ViewAll"
+            component={ViewAll}
+            options={{ title: "ViewAll"}}
           />
         </Stack.Navigator>
       </NavigationContainer>
