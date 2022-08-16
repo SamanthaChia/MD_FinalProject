@@ -53,7 +53,9 @@ export default class Home extends Component {
                         new Movie({
                             id: movie.id,
                             title: movie.title,
-                            poster_path: "http://image.tmdb.org/t/p/w342/" + movie.poster_path,
+                            poster_path: movie.poster_path == null
+                                         ? "https://lightning.od-cdn.com/25.2.6-build-2536-master/public/img/no-cover_en_US.jpg" 
+                                         :"http://image.tmdb.org/t/p/w342/" + movie.poster_path,
                             backdrop_path: "http://image.tmmdv.org/t/p/w500/" + movie.backdrop_path,
                             genre_ids: movie.genre_ids,
                             overview: movie.overview,
@@ -68,7 +70,7 @@ export default class Home extends Component {
                     this.setState({query: query, queryResults: movieData});
                 });
             })
-            .catch((error) => console.error)
+            .catch((error) => console.error(error))
         )
     };
 
@@ -162,18 +164,139 @@ export default class Home extends Component {
         this._isMount = false;
     }
 
+    handleSelect = () => {
+        this.setState({ isAnimating: true });
+
+        this.state.fadeAnim._value != this.deviceWidth - 40
+            ? Animated.timing(this.state.fadeAnim, {
+                toValue: this.deviceWidth - 40,
+                duration: 500,
+                useNativeDriver: false
+            }).start(() => {
+                this.setState({ iconName: "close" });
+                this.setState({ isAnimating: false });
+            })
+            : Animated.timing(this.state.fadeAnim, {
+                toValue: 40,
+                duration:500,
+                useNativeDriver: false,
+            }).start(() => {
+                this.setState({ iconName: "magnify", query: "", queryResults: []});
+                this.setState({ isAnimating: false });
+            });
+    };
+
+    renderRectangle = (context) => {
+        const { boolDarkMode, light, dark } = context;
+        const customStyle = {
+            width: this.state.fadeAnim,
+        };
+
+        return (
+            <Animated.View style={[styles.rectangle, customStyle]}>
+                <TouchableWithoutFeedback
+                    styl={{
+                        width: 40,
+                        height: 40,
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                    onPress={() => this.handleSelect()}
+                >
+                    <MaterialCommunityIcons name={this.state.iconName} color={boolDarkMode ? light.bg : dark.bg} size={24} />
+                </TouchableWithoutFeedback>
+            </Animated.View>
+        );
+    };
+
     render() {
         return (
             <ThemeContext.Consumer>
                 {(context) => {
                     const { boolDarkMode, light, dark } = context;
+
                     return(
                         <SafeAreaView style={[styles.container,{backgroundColor:boolDarkMode ? dark.bg : light.bg}]}>
                         <View style={styles.header}>
-                            <Text style={[styles.appName, {color:boolDarkMode ? light.bg : dark.bg}]} >App Name</Text>
-                            <MaterialCommunityIcons name="magnify" size={27} style={{color:boolDarkMode ? light.bg : dark.bg}} />
+                            {!this.state.isAnimating && this.state.iconName == "magnify" ? (
+                                <Text
+                                    style={[styles.appName, {color: boolDarkMode ? light.bg : dark.bg}]}
+                                >
+                                    App Name
+                                </Text>
+                            ) : (
+                                <View />
+                            )}
+                            {/* <Text style={[styles.appName, {color:boolDarkMode ? light.bg : dark.bg}]} >App Name</Text> */}
+                            {/* <MaterialCommunityIcons name="magnify" size={27} style={{color:boolDarkMode ? light.bg : dark.bg}} /> */}
+                            <View style={{ flexWrap: "wrap" }}>
+                                {this.renderRectangle(context)}
+                            </View>
                         </View>
-                        <ScrollView>  
+                        {!this.state.isAnimating && this.state.iconName == "close" ? (
+                            <Autocomplete
+                                style={{
+                                    backgroundColor: "transparent",
+                                }}
+                                data={this.state.queryResults}
+                                placeholder="Enter Movie Name"
+                                autoFocus={true}
+                                placeholderTextColor={boolDarkMode ? light.bg : dark.bg}
+                                keyExtractor={(item, i) => item.id.toString()}
+                                containerStyle={{
+                                    paddingHorizontal: 20,
+                                    position: "absolute",
+                                    top: 40,
+                                    paddingLeft: 60,
+                                    height: 40,
+                                    width: "100%",
+                                }}
+                                inputContainerStyle={{
+                                    borderWidth: 0,
+                                    height: 40,
+                                }}
+                                listStyle={{
+                                    maxHeight: 300,
+                                    zIndex: 999,
+                                }}
+                                onChangeText={(text) => {
+                                    this.searchData(text);
+                                }}
+                                renderItem={({item , i}) => (
+                                    <TouchableWithoutFeedback
+                                        onPress={() => {
+                                            this.props.navigation.navigate("MovieDetails", {
+                                                item: item,
+                                            });
+                                        }}
+                                    >
+                                        <View
+                                            style={{
+                                                flex: 1,
+                                                flexDirection: "row",
+                                                marginBottom: 10,
+                                            }}
+                                        >
+                                            <Image style={{width: 38, height: 57}} source={{uri: item.poster_path}} />
+                                            <View 
+                                                style={{
+                                                    flexWrap: "wrap",
+                                                    flexDirection: "column",
+                                                    marginLeft: 5,
+                                                    justifyContent: "center",
+                                                }}
+                                            >
+                                                <Text>{item.title}</Text>
+                                                <Text>{item.release_date}</Text>
+                                            </View>
+                                        </View>
+                                    </TouchableWithoutFeedback>
+                                )}
+                            />
+                        ) : (
+                            <View />
+                        )}
+                        <ScrollView scrollEnabled={this.state.query == "" ? true : false}>  
                             <View style={styles.popularMoviesBox}>
                                 <Text style={[styles.headerTitle, {color:boolDarkMode ? light.bg : dark.bg}]}>Popular Movies</Text>
                                 <TouchableWithoutFeedback
@@ -192,7 +315,9 @@ export default class Home extends Component {
 
                             <ScrollView 
                                 horizontal={true}
-                                showsHorizontalScrollIndicator={false}>
+                                scrollEnabled={this.state.query == "" ? true : false}
+                                showsHorizontalScrollIndicator={false}
+                            >
                                 <View style={styles.popularHome}>
                                     {
                                         this.state.popularMovies.map((item, index) => {
@@ -280,5 +405,8 @@ const styles = StyleSheet.create({
         alignItems: "center",
         paddingHorizontal: 20,
         marginVertical: 10,
+    },
+    rectangle:{
+        height:40,
     }
 })
