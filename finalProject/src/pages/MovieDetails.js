@@ -7,6 +7,7 @@ import GenreLabel from '../components/GenreLabel';
 import TrailerTeaser from '../models/TrailerTeaser';
 import TrailerTeaserDisplay from '../components/TrailerTeaserDisplay';
 import { ThemeContext } from '../contexts/ThemeContext';
+import Cast from '../models/Cast';
 
 class MovieDetails extends Component {
     // initialise
@@ -21,6 +22,7 @@ class MovieDetails extends Component {
 
     state = {
         trailerTeasers: [],
+        castDetails: [],
         modalVisible: false,
         activeMovieTrailerKey: "",
     };
@@ -42,13 +44,21 @@ class MovieDetails extends Component {
 
                     this.setState({ trailerTeasers: items });
 
-                    fetch(this.baseURL + this.movieDetails.id + '/credits?api_key=' + this.apiKey)
-                        .then((response) => response.json())
-                        .then((responseJson) => {
-                            var castDetails = [];
-
-                        })
-                        .catch((error) => console.error(error))
+                fetch(this.baseURL + this.movieDetails.id + '/credits?api_key=' + this.apiKey)
+                    .then((response) => response.json())
+                    .then((responseJson) => {
+                        var cDetails = [];
+                        responseJson.cast.map((cast) => {
+                            cDetails.push(new Cast({
+                                name: cast.name,
+                                character: cast.character,
+                                profile_path: cast.profile_path
+                            })
+                            );
+                        });
+                        this.setState({castDetails: cDetails});
+                    })
+                    .catch((error) => console.error(error))
                 }).catch((error) => console.error(error))
 
         );
@@ -126,6 +136,9 @@ class MovieDetails extends Component {
                                     <Text style={[styles.header, { color: boolDarkMode ? light.bg : dark.bg }]}>Movie Description</Text>
                                     <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>{this.movieDetails.overview}</Text>
                                     <Text style={[styles.header, { color: boolDarkMode ? light.bg : dark.bg }]}>Cast</Text>
+                                    <View style={styles.castContainer}>
+
+                                    </View>
                                     <Text style={[styles.header, { color: boolDarkMode ? light.bg : dark.bg }]}>Movie Trailers & Teasers</Text>
                                     <View style={styles.trailerTeaserBox}>
                                         {
