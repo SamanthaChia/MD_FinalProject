@@ -240,6 +240,7 @@ export default class Home extends Component {
                                         <Autocomplete
                                             style={{
                                                 backgroundColor: "transparent",
+                                                color: boolDarkMode ? light.bg : dark.bg 
                                             }}
                                             data={this.state.queryResults}
                                             placeholder="Enter Movie Name"
@@ -253,13 +254,13 @@ export default class Home extends Component {
                                                 height: 40,
                                                 width: "100%",
                                             }}
-                                            inputContainerStyle={{
-                                                borderWidth: 0,
-                                                height: 40,
-                                            }}
                                             listStyle={{
                                                 maxHeight: 300,
                                                 zIndex: 999,
+                                            }}
+                                            inputContainerStyle={{
+                                                borderWidth: 0,
+                                                height: 40,
                                             }}
                                             onChangeText={(text) => {
                                                 //text being the query being passed into searchData
@@ -280,6 +281,8 @@ export default class Home extends Component {
                                                             flex: 1,
                                                             flexDirection: "row",
                                                             marginBottom: 10,
+                                                            backgroundColor: boolDarkMode ? dark.bg : light.bg
+
                                                         }}
                                                     >
                                                         <Image style={{ width: 38, height: 57 }} source={{ uri: item.poster_path }} />
@@ -291,8 +294,8 @@ export default class Home extends Component {
                                                                 justifyContent: "center",
                                                             }}
                                                         >
-                                                            <Text>{item.title}</Text>
-                                                            <Text>{item.release_date}</Text>
+                                                            <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>{item.title}</Text>
+                                                            <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>{item.release_date}</Text>
                                                         </View>
                                                     </View>
                                                 </TouchableWithoutFeedback>
