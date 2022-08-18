@@ -8,10 +8,10 @@ function CastComp(props) {
             {(context) => {
                 const { boolDarkMode, light, dark } = context;
                 return (
-                        <View style={styles.castContainer}>
-                            <Image style={styles.profileImage} source={{ uri: props.item.profile_path }} />
-                            <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>{props.item.name}</Text>
-                        </View>
+                    <View style={styles.castContainer}>
+                        <Image style={styles.profileImage} source={{ uri: props.item.profile_path }} />
+                        <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>{props.item.name}</Text>
+                    </View>
                 )
             }}
         </ThemeContext.Consumer>
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         height: 100,
         padding: 10,
     },
-    castContainer:{
+    castContainer: {
         alignItems: "center",
         paddingHorizontal: 5,
         marginVertical: 10,
