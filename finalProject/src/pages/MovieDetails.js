@@ -137,14 +137,14 @@ class MovieDetails extends Component {
                                     <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>{this.movieDetails.overview}</Text>
                                     <View style={{ flexWrap: "wrap", flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
                                         <View style={styles.voteLeftBox}>
-                                            <Text style={styles.header}>Vote Average</Text>
+                                            <Text style={[styles.header, { color: boolDarkMode ? light.bg : dark.bg }]}>Vote Average</Text>
                                             <View style={styles.ratingAvg}>
                                                 <MaterialCommunityIcons name="star" size={20} color="#EDD622" style={{ alignSelf: "center" }} />
                                                 <Text style={{ fontWeight: "bold", color: boolDarkMode ? light.bg : dark.bg }}>{this.movieDetails.vote_average} /10</Text>
                                             </View>
                                         </View>
                                         <View style={styles.releaseDateRightBox}>
-                                            <Text style={styles.header}>Release Date</Text>
+                                            <Text style={[styles.header, { color: boolDarkMode ? light.bg : dark.bg }]}>Release Date</Text>
                                             <View style={styles.releaseDate}>
                                                 <Text style={{ fontWeight: "bold", color: boolDarkMode ? light.bg : dark.bg }}>{this.movieDetails.release_date}</Text>
                                             </View>
@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 23,
         fontWeight: "bold",
-        marginTop: 10,
+        marginTop: 20,
     },
     trailerTeaserBox: {
         flexWrap: "wrap",
@@ -269,7 +269,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         marginTop: 5,
     },
-    releaseDate:{
+    releaseDate: {
         flexDirection: "row",
         justifyContent: "center",
         marginTop: 5,

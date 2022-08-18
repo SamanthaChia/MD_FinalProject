@@ -10,22 +10,22 @@ export default class Settings extends Component {
             <ThemeContext.Consumer>
                 {(context) => {
                     const { boolDarkMode, light, dark, updateTheme } = context;
-                    return(
+                    return (
                         <SafeAreaView
                             style={[
                                 styles.container,
-                                {backgroundColor: boolDarkMode ? dark.bg : light.bg},
+                                { backgroundColor: boolDarkMode ? dark.bg : light.bg },
                             ]}
                         >
-                            <Text style={[styles.title, {color:boolDarkMode ? light.bg : dark.bg}]}>Settings</Text>
+                            <Text style={[styles.title, { color: boolDarkMode ? light.bg : dark.bg }]}>Settings</Text>
                             <View style={styles.settingsItem}>
                                 <View style={styles.settingsItem2}>
-                                    <MaterialCommunityIcons 
+                                    <MaterialCommunityIcons
                                         name={boolDarkMode ? "weather-night" : "weather-sunny"}
-                                        style={{color:boolDarkMode ? light.bg : dark.bg}}
-                                        size={26} 
+                                        style={{ color: boolDarkMode ? light.bg : dark.bg }}
+                                        size={26}
                                     />
-                                    <Text style={{marginLeft: 10, color:boolDarkMode ? light.bg : dark.bg}}> Dark Mode</Text>
+                                    <Text style={{ marginLeft: 10, color: boolDarkMode ? light.bg : dark.bg }}> Dark Mode</Text>
                                 </View>
                                 <Switch value={boolDarkMode} onValueChange={updateTheme} />
                             </View>
@@ -38,22 +38,22 @@ export default class Settings extends Component {
 }
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
         paddingTop: 20,
         marginTop: Constants.statusBarHeight,
     },
-    title:{
+    title: {
         fontWeight: "bold",
         fontSize: 25,
         marginBottom: 20,
-    },  
-    settingsItem:{
+    },
+    settingsItem: {
         justifyContent: "space-between",
         flexDirection: "row",
         alignItems: "center",
     },
-    settingsItem2:{
+    settingsItem2: {
         flexWrap: "wrap",
         alignItems: "center",
         flexDirection: "row",

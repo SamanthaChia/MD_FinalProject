@@ -49,7 +49,7 @@ export default class Home extends Component {
                             movie.genres.push(genreData[0].name);
                         }
                     });
-                    movieData.push(                        
+                    movieData.push(
                         new Movie({
                             id: movie.id,
                             title: movie.title,
@@ -237,71 +237,71 @@ export default class Home extends Component {
                             {/* check that it is not animating currently and check that the icon name is close
                          before showing autocomplete */}
                             {!this.state.isAnimating && this.state.iconName == "close" ? (
-                                        <Autocomplete
-                                            style={{
-                                                backgroundColor: "transparent",
-                                                color: boolDarkMode ? light.bg : dark.bg 
-                                            }}
-                                            data={this.state.queryResults}
-                                            placeholder="Enter Movie Name"
-                                            autoFocus={true}
-                                            placeholderTextColor={boolDarkMode ? light.bg : dark.bg}
-                                            containerStyle={{
-                                                paddingHorizontal: 20,
-                                                position: "absolute",
-                                                top: 15,
-                                                paddingLeft: 60,
-                                                height: 40,
-                                                width: "100%",
-                                            }}
-                                            listStyle={{
-                                                maxHeight: 300,
-                                                zIndex: 999,
-                                            }}
-                                            inputContainerStyle={{
-                                                borderWidth: 0,
-                                                height: 40,
-                                            }}
-                                            onChangeText={(text) => {
-                                                //text being the query being passed into searchData
-                                                this.searchData(text);
-                                            }}
-                                            flatListProps={{
-                                                keyExtractor: (item, i) => item.id.toString(),
-                                                renderItem: ({item}) => (
-                                                    <TouchableWithoutFeedback
-                                                    onPress={() => {
-                                                        this.props.navigation.navigate("MovieDetails", {
-                                                            details: item,
-                                                        });
+                                <Autocomplete
+                                    style={{
+                                        backgroundColor: "transparent",
+                                        color: boolDarkMode ? light.bg : dark.bg
+                                    }}
+                                    data={this.state.queryResults}
+                                    placeholder="Enter Movie Name"
+                                    autoFocus={true}
+                                    placeholderTextColor={boolDarkMode ? light.bg : dark.bg}
+                                    containerStyle={{
+                                        paddingHorizontal: 20,
+                                        position: "absolute",
+                                        top: 15,
+                                        paddingLeft: 60,
+                                        height: 40,
+                                        width: "100%",
+                                    }}
+                                    listStyle={{
+                                        maxHeight: 300,
+                                        zIndex: 999,
+                                    }}
+                                    inputContainerStyle={{
+                                        borderWidth: 0,
+                                        height: 40,
+                                    }}
+                                    onChangeText={(text) => {
+                                        //text being the query being passed into searchData
+                                        this.searchData(text);
+                                    }}
+                                    flatListProps={{
+                                        keyExtractor: (item, i) => item.id.toString(),
+                                        renderItem: ({ item }) => (
+                                            <TouchableWithoutFeedback
+                                                onPress={() => {
+                                                    this.props.navigation.navigate("MovieDetails", {
+                                                        details: item,
+                                                    });
+                                                }}
+                                            >
+                                                <View
+                                                    style={{
+                                                        flex: 1,
+                                                        flexDirection: "row",
+                                                        marginBottom: 10,
+                                                        backgroundColor: boolDarkMode ? dark.bg : light.bg
+
                                                     }}
                                                 >
+                                                    <Image style={{ width: 38, height: 57 }} source={{ uri: item.poster_path }} />
                                                     <View
                                                         style={{
-                                                            flex: 1,
-                                                            flexDirection: "row",
-                                                            marginBottom: 10,
-                                                            backgroundColor: boolDarkMode ? dark.bg : light.bg
-
+                                                            flexWrap: "wrap",
+                                                            flexDirection: "column",
+                                                            marginLeft: 5,
+                                                            justifyContent: "center",
                                                         }}
                                                     >
-                                                        <Image style={{ width: 38, height: 57 }} source={{ uri: item.poster_path }} />
-                                                        <View
-                                                            style={{
-                                                                flexWrap: "wrap",
-                                                                flexDirection: "column",
-                                                                marginLeft: 5,
-                                                                justifyContent: "center",
-                                                            }}
-                                                        >
-                                                            <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>{item.title}</Text>
-                                                            <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>{item.release_date}</Text>
-                                                        </View>
+                                                        <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>{item.title}</Text>
+                                                        <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>{item.release_date}</Text>
                                                     </View>
-                                                </TouchableWithoutFeedback>
-                                                )
-                                            }}
-                                        />
+                                                </View>
+                                            </TouchableWithoutFeedback>
+                                        )
+                                    }}
+                                />
                             ) : (
                                 <View />
                             )}
