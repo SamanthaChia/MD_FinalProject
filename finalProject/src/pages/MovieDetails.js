@@ -130,15 +130,26 @@ class MovieDetails extends Component {
                                     <View style={styles.outer_box}>
                                         <View style={styles.title_genre}>
                                             <Text style={[styles.title, { color: boolDarkMode ? light.bg : dark.bg }]}>{this.movieDetails.title}</Text>
-                                            <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>{this.movieDetails.release_date}</Text>
-                                        </View>
-                                        <View style={[styles.averageScore, { backgroundColor: boolDarkMode ? light.bg : dark.bg }]}>
-                                            <Text style={{ color: boolDarkMode ? dark.bg : light.bg }}>{this.movieDetails.vote_average}</Text>
                                         </View>
                                     </View>
                                     <GenreLabel data={this.movieDetails.genre} />
                                     <Text style={[styles.header, { color: boolDarkMode ? light.bg : dark.bg }]}>Movie Description</Text>
                                     <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>{this.movieDetails.overview}</Text>
+                                    <View style={{ flexWrap: "wrap", flexDirection: "row", alignContent: "center", justifyContent: "center" }}>
+                                        <View style={styles.voteLeftBox}>
+                                            <Text style={styles.header}>Vote Average</Text>
+                                            <View style={styles.ratingAvg}>
+                                                <MaterialCommunityIcons name="star" size={20} color="#EDD622" style={{ alignSelf: "center" }} />
+                                                <Text style={{ fontWeight: "bold", color: boolDarkMode ? light.bg : dark.bg }}>{this.movieDetails.vote_average} /10</Text>
+                                            </View>
+                                        </View>
+                                        <View style={styles.releaseDateRightBox}>
+                                            <Text style={styles.header}>Release Date</Text>
+                                            <View style={styles.releaseDate}>
+                                                <Text style={{ fontWeight: "bold", color: boolDarkMode ? light.bg : dark.bg }}>{this.movieDetails.release_date}</Text>
+                                            </View>
+                                        </View>
+                                    </View>
                                     <Text style={[styles.header, { color: boolDarkMode ? light.bg : dark.bg }]}>Cast</Text>
                                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
                                         {
@@ -245,10 +256,24 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignContent: "center"
     },
-    castContainer: {
-        flexDirection: "row",
-        flex: 1,
+    voteLeftBox: {
+        width: "50%",
+        alignContent: "center",
+        justifyContent: "center",
     },
+    releaseDateRightBox: {
+        width: "50%",
+    },
+    ratingAvg: {
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 5,
+    },
+    releaseDate:{
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 5,
+    }
 });
 
 export default MovieDetails;
