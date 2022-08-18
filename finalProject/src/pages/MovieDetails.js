@@ -43,7 +43,8 @@ class MovieDetails extends Component {
                     });
 
                     this.setState({ trailerTeasers: items });
-
+                
+                // fetch details for credits
                 fetch(this.baseURL + this.movieDetails.id + '/credits?api_key=' + this.apiKey)
                     .then((response) => response.json())
                     .then((responseJson) => {
