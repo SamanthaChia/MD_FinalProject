@@ -4,7 +4,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Constants from 'expo-constants';
 import Home from './Home';
-import Favourites from './Favourites';
 import Settings from './Settings';
 
 const Tab = createBottomTabNavigator();
@@ -63,17 +62,6 @@ class MainRoot extends Component {
                     }}
                     name="Home"
                     component={HomeComponent}
-                />
-
-                <Tab.Screen
-                    options={{
-                        tabBarLabel: "Favourites",
-                        tabBarIcon: ({ color, size }) => (
-                            <MaterialCommunityIcons name="cards-heart" color={color} size={size} />
-                        ),
-                    }}
-                    name="Favourites"
-                    component={Favourites}
                 />
 
                 <Tab.Screen
