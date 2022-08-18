@@ -151,7 +151,7 @@ class MovieDetails extends Component {
                                     </ScrollView>
 
                                     <Text style={[styles.header, { color: boolDarkMode ? light.bg : dark.bg }]}>Movie Trailers & Teasers</Text>
-                                    <View style={styles.trailerTeaserBox}>
+                                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
                                         {
                                             this.state.trailerTeasers.map((item) => {
                                                 return (
@@ -168,7 +168,7 @@ class MovieDetails extends Component {
                                                 )
                                             })
                                         }
-                                    </View>
+                                    </ScrollView>
                                 </View>
                             </ScrollView>
                         </View>
