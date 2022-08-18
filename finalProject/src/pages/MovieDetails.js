@@ -8,6 +8,7 @@ import TrailerTeaser from '../models/TrailerTeaser';
 import TrailerTeaserDisplay from '../components/TrailerTeaserDisplay';
 import { ThemeContext } from '../contexts/ThemeContext';
 import Cast from '../models/Cast';
+import CastComp from '../components/CastComp';
 
 class MovieDetails extends Component {
     // initialise
@@ -43,23 +44,25 @@ class MovieDetails extends Component {
                     });
 
                     this.setState({ trailerTeasers: items });
-                
-                // fetch details for credits
-                fetch(this.baseURL + this.movieDetails.id + '/credits?api_key=' + this.apiKey)
-                    .then((response) => response.json())
-                    .then((responseJson) => {
-                        var cDetails = [];
-                        responseJson.cast.map((cast) => {
-                            cDetails.push(new Cast({
-                                name: cast.name,
-                                character: cast.character,
-                                profile_path: cast.profile_path
-                            })
-                            );
-                        });
-                        this.setState({castDetails: cDetails});
-                    })
-                    .catch((error) => console.error(error))
+
+                    // fetch details for credits
+                    fetch(this.baseURL + this.movieDetails.id + '/credits?api_key=' + this.apiKey)
+                        .then((response) => response.json())
+                        .then((responseJson) => {
+                            var cDetails = [];
+                            responseJson.cast.map((cast) => {
+                                cDetails.push(new Cast({
+                                    name: cast.name,
+                                    id: cast.id,
+                                    profile_path: cast.profile_path == null
+                                        ? "https://lightning.od-cdn.com/25.2.6-build-2536-master/public/img/no-cover_en_US.jpg"
+                                        : "http://image.tmdb.org/t/p/w92" + cast.profile_path,
+                                })
+                                );
+                            });
+                            this.setState({ castDetails: cDetails });
+                        })
+                        .catch((error) => console.error(error))
                 }).catch((error) => console.error(error))
 
         );
@@ -137,9 +140,16 @@ class MovieDetails extends Component {
                                     <Text style={[styles.header, { color: boolDarkMode ? light.bg : dark.bg }]}>Movie Description</Text>
                                     <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>{this.movieDetails.overview}</Text>
                                     <Text style={[styles.header, { color: boolDarkMode ? light.bg : dark.bg }]}>Cast</Text>
-                                    <View style={styles.castContainer}>
+                                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} >
+                                        {
+                                            this.state.castDetails.map((item) => {
+                                                return (
+                                                    <CastComp key={item.id} item={item} />
+                                                )
+                                            })
+                                        }
+                                    </ScrollView>
 
-                                    </View>
                                     <Text style={[styles.header, { color: boolDarkMode ? light.bg : dark.bg }]}>Movie Trailers & Teasers</Text>
                                     <View style={styles.trailerTeaserBox}>
                                         {
@@ -234,6 +244,10 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         justifyContent: "center",
         alignContent: "center"
+    },
+    castContainer: {
+        flexDirection: "row",
+        flex: 1,
     },
 });
 

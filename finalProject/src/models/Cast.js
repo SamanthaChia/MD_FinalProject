@@ -1,8 +1,8 @@
 export default class Cast
 {
-    constructor({name, character, profile_path}) {
+    constructor({name, id, profile_path}) {
         this.name = name;
-        this.character = character;
+        this.id = id;
         this.profile_path = profile_path;
     }
 }
