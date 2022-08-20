@@ -23,8 +23,8 @@ class ThemeContextProvider extends Component {
         super();
         this.state = {
             boolDarkMode: false,
-            light: { bg: "#FFF" },
-            dark: { bg: "#2d2d2d" },
+            light: { bg: "#FAF9F7" },
+            dark: { bg: "#27241D" },
         };
         this.getboolDarkMode();
     }
