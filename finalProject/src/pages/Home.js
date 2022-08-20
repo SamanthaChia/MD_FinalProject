@@ -54,7 +54,7 @@ export default class Home extends Component {
                             id: movie.id,
                             title: movie.title,
                             poster_path: movie.poster_path == null
-                                ? "https://lightning.od-cdn.com/25.2.6-build-2536-master/public/img/no-cover_en_US.jpg"
+                                ? "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg"
                                 : "http://image.tmdb.org/t/p/w342/" + movie.poster_path,
                             genre_ids: movie.genre_ids,
                             overview: movie.overview,
@@ -97,7 +97,7 @@ export default class Home extends Component {
                                 id: movie.id,
                                 title: movie.title,
                                 poster_path: movie.poster_path == null
-                                    ? "https://lightning.od-cdn.com/25.2.6-build-2536-master/public/img/no-cover_en_US.jpg"
+                                    ? "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg"
                                     : "http://image.tmdb.org/t/p/w342/" + movie.poster_path,
                                 overview: movie.overview,
                                 genre_ids: movie.genre_ids,
@@ -136,7 +136,7 @@ export default class Home extends Component {
                                     id: movie.id,
                                     title: movie.title,
                                     poster_path: movie.poster_path == null
-                                        ? "https://lightning.od-cdn.com/25.2.6-build-2536-master/public/img/no-cover_en_US.jpg"
+                                        ? "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg"
                                         : "http://image.tmdb.org/t/p/w342/" + movie.poster_path,
                                     overview: movie.overview,
                                     genre_ids: movie.genre_ids,
@@ -318,7 +318,7 @@ export default class Home extends Component {
                                             })
                                         }}>
                                         <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center" }}>
-                                            <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>View All</Text>
+                                            <Text style={{fontWeight:"bold", color: boolDarkMode ? light.bg : dark.bg }}>View All</Text>
                                             <MaterialCommunityIcons name="chevron-right" size={20} style={{ color: boolDarkMode ? light.bg : dark.bg }} />
                                         </View>
                                     </TouchableWithoutFeedback>
@@ -354,7 +354,7 @@ export default class Home extends Component {
                                         }}
                                     >
                                         <View style={{ flexDirection: "row", flexWrap: "wrap", alignItems: "center" }}>
-                                            <Text style={{ color: boolDarkMode ? light.bg : dark.bg }}>View All</Text>
+                                            <Text style={{fontWeight:"bold", color: boolDarkMode ? light.bg : dark.bg }}>View All</Text>
                                             <MaterialCommunityIcons name="chevron-right" size={20} style={{ color: boolDarkMode ? light.bg : dark.bg }} />
                                         </View>
                                     </TouchableWithoutFeedback>

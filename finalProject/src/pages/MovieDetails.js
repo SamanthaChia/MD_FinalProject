@@ -55,7 +55,7 @@ class MovieDetails extends Component {
                                     name: cast.name,
                                     id: cast.id,
                                     profile_path: cast.profile_path == null
-                                        ? "https://lightning.od-cdn.com/25.2.6-build-2536-master/public/img/no-cover_en_US.jpg"
+                                        ? "https://www.thermaxglobal.com/wp-content/uploads/2020/05/image-not-found.jpg"
                                         : "http://image.tmdb.org/t/p/w92" + cast.profile_path,
                                 })
                                 );
