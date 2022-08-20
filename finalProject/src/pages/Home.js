@@ -254,8 +254,10 @@ export default class Home extends Component {
                                         height: 40,
                                         width: "100%",
                                     }}
-                                    listStyle={{
+                                    listContainerStyle={{
                                         maxHeight: 300,
+                                        height: 150,
+                                        backgroundColor: boolDarkMode ? dark.bg : light.bg,
                                         zIndex: 999,
                                     }}
                                     inputContainerStyle={{
