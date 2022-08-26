@@ -8,7 +8,7 @@ function TrailerTeaserDisplay(props) {
     var posterWidth = (deviceWidth - 50) / 2;
     var leftPosition = (posterWidth - 24) / 2;
 
-    const thumbnail = "https://img.youtube.com/vi/" + props.trailerdata.key + "/hqdefault.jpg";
+    const thumbnail = "https://i.ytimg.com/vi/" + props.trailerdata.key + "/hqdefault.jpg";
 
     return (
         <ThemeContext.Consumer>

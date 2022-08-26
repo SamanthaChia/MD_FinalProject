@@ -95,6 +95,7 @@ class MovieDetails extends Component {
                                                 name="close"
                                                 size={20}
                                                 color={"white"}
+                                                style={{position:"absolute", left: 13}}
                                             />
                                         </TouchableWithoutFeedback>
                                     </View>
@@ -215,22 +216,10 @@ const styles = StyleSheet.create({
         flexWrap: "wrap",
         flexDirection: "column"
     },
-    averageScore: {
-        width: 48,
-        height: 48,
-        backgroundColor: "white",
-        borderRadius: 24,
-        justifyContent: "center",
-        alignItems: "center",
-    },
     header: {
         fontSize: 23,
         fontWeight: "bold",
         marginTop: 20,
-    },
-    trailerTeaserBox: {
-        flexWrap: "wrap",
-        flexDirection: "row",
     },
     modal: {
         position: "absolute",
@@ -246,7 +235,7 @@ const styles = StyleSheet.create({
         backgroundColor: "black"
     },
     xBtn: {
-        backgroundColor: "#222",
+        backgroundColor: "grey",
         width: 48,
         height: 48,
         position: "absolute",
@@ -254,7 +243,7 @@ const styles = StyleSheet.create({
         left: 20,
         borderRadius: 10,
         justifyContent: "center",
-        alignContent: "center"
+        alignContent: "center",
     },
     voteLeftBox: {
         width: "50%",

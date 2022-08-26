@@ -103,7 +103,7 @@ class ViewAll extends Component {
                                 <TouchableWithoutFeedback onPress={() => this.props.navigation.pop()}>
                                     <View style={styles.backBtn}>
                                         <MaterialCommunityIcons name="chevron-left" color={boolDarkMode ? light.bg : dark.bg} size={25} />
-                                        <Text style={[styles.headerText, { color: boolDarkMode ? light.bg : dark.bg }]}>View All</Text>
+                                        <Text style={[styles.headerText, { color: boolDarkMode ? light.bg : dark.bg }]}>{this.props.route.params.isPopular ? "Popular's" : "Now Playing's"} View All</Text>
                                     </View>
                                 </TouchableWithoutFeedback>
                                 <FlatList
@@ -123,7 +123,6 @@ class ViewAll extends Component {
                 </ThemeContext.Consumer>
             );
         }
-        return <View></View>;
     }
 }
 
