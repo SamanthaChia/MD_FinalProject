@@ -225,7 +225,7 @@ export default class Home extends Component {
                                     <Text
                                         style={[styles.appName, { color: boolDarkMode ? light.bg : dark.bg }]}
                                     >
-                                        App Name
+                                        PopcornUpdates
                                     </Text>
                                 ) : (
                                     <View />

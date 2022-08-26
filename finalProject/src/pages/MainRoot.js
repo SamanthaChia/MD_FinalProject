@@ -80,11 +80,6 @@ class MainRoot extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: Constants.statusBarHeight,
-    },
-
     activitySafeArea: {
         flex: 1,
         justifyContent: "center",
